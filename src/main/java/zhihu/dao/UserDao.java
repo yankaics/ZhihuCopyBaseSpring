@@ -1,6 +1,7 @@
 package zhihu.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -33,13 +34,18 @@ public class UserDao {
 
 
 	public String login(User user, HttpSession session){
-		User queryUser = jdbcOperations.queryForObject(
-											QUERY_USER_BY_USERNAME,
-											new UserRowMapper(),
-											user.getUsername());
-		if (queryUser==null)
+		User queryUser = null;
+		try {
+			queryUser = jdbcOperations.queryForObject(
+					QUERY_USER_BY_USERNAME,
+					new UserRowMapper(),
+					user.getUsername());
+		}
+		catch (EmptyResultDataAccessException e){
 			return "不存在该账户";
-		else if(queryUser.getPassword().equals(MD5Util.MD5(user.getPassword()))){
+		}
+
+		if(queryUser.getPassword().equals(MD5Util.MD5(user.getPassword()))){
 			session.setAttribute("user",user);
 			return "success";
 		}
