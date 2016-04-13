@@ -101,28 +101,29 @@
             });
 
             app.controller("loginCtrl",function($scope,$http,$window){
-                $scope.user="";
-                $scope.password="";
+                $scope.user ={
+                    "username" : "",
+                    "password" : ""
+                };
                 $scope.login=function(){
                     $http(
                             {
                                 method: 'POST',
-                                url: "/signin",
-                                data: {
-                                    user: $scope.user,
-                                    password: $scope.password
+                                url: "/login/signin",
+                                data:$scope.user,
+                                headers: {
+                                    "Content-Type": "application/json"
                                 }
                             }
                     ).success(function (data) {
-                        console.log(data.message);
-                        if(data.message==='ok'){
-                            console.log(data.message);
+                        console.log(data);
+                        if(data==='success'){
                             $window.location.href='/index';
                         }
-                        else if(data.message)
-                            alert(data.message);
-
+                        else
+                            alert(data);
                     }).error(function (data) {
+                        console.log(data);
                         alert("error");
                         alert(data);
                     });

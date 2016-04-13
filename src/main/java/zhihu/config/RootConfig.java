@@ -2,11 +2,13 @@ package zhihu.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * Created by ZJ on 2016/4/13.
  */
 @Configuration
-@ComponentScan(basePackages = {"zhihu.config"})
+@Import(DataConfig.class)
+@ComponentScan(basePackages = {"zhihu.config","zhihu.dao"})
 public class RootConfig {
 }
