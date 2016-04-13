@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+    <title>知乎</title>
+
+    <link rel='stylesheet' href='/resources/stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='/resources/stylesheets/nav.css' />
+    <link rel='stylesheet' href='/resources/stylesheets/index.css' />
+    <script type="text/javascript" src="/resources/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/resources/javascripts/bootstrap.js"></script>
+
+    </head>
+    <body ng-app="zhihu" ng-controller="mainCtrl"  ng-cloak="">
+        <div class="index container" >
+            <div class="header" th:include="topnav:: topnav">
+                <br clear="both"/>
+            </div>
+            <div class="index-zhihu col-md-12 ">
+            <div class="left-content col-md-8 ">
+                  <div class="tag-top">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    <span class="h4">最新动态</span>
+                  </div>
+            </div>
+            <div class="right-others col-md-4 ">
+              <img userID="working" src="/resources/images/static/working.png" alt=""/>
+              <span userID="warning">抱歉，这边正在紧张的施工…</span>
+            </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="/resources/javascripts/angular.min.js"></script>
+        <script>
+            angular.module("zhihu",[]);
+        </script>
+        <script type="text/javascript" src="/resources/controller/mainController.js"></script>
+    </body>
+
+
+</html>

@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel='stylesheet' href='/resources/stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='/resources//stylesheets/nav.css' />
+    <link rel='stylesheet' href='/resources//stylesheets/home.css' />
+    <script type="text/javascript" src="/resources/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/resources/javascripts/bootstrap.js"></script>
+    <script type="text/javascript" src="/resources/javascripts/angular.min.js"></script>
+    <script type="text/javascript" src="/resources/javascripts/angular-route.min.js"></script>
+</head>
+<body class="container " ng-app="home" ng-controller="homeCtrl">
+    <div class="header" th:include="topnav:: topnav">
+        <br clear="both"/>
+    </div>
+    <div class="home-zhihu col-md-12 ">
+        <div class="left-content col-md-8 ">
+            <div class="detail panel panel-default">
+                <div class="panel-heading">
+                    <h4><strong>Three</strong>,Android/前端</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4 pull-left">
+                            <img class="user-avatar" th:src="@{/resources/images/static/liukanshan.png}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 pull-left vote-detail">
+                            <span>获得 141赞同 37感谢</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <ul class="nav nav-pills">
+                        <li role="presentation"  ng-class="{active : activeMenu === 'Home'}"  ng-click="activeMenu = 'Home'">
+                            <a href="#/ans" >Home</a>
+                        </li>
+                        <li role="presentation"  ng-class="{active : activeMenu === 'Ans'}" ng-click="activeMenu = 'Ans'">
+                            <a href="#/ans" >回答</a>
+                        </li>
+                        <li role="presentation" ng-class="{active : activeMenu === 'Que'}" ng-click="activeMenu = 'Que'">
+                            <a href="#/que">提问</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div ng-view=""></div>
+        </div>
+        <div class="right-others col-md-4 ">
+            <img userID="working" src="/resources/images/static/working.png" alt=""/>
+            <span userID="warning">抱歉，这边正在紧张的施工…</span>
+        </div>
+    </div>
+
+    <script>
+        angular.module("home",['ngRoute'])
+            .config(['$routeProvider',
+            function ($routeProvider) {
+                $routeProvider.when('/', {
+                    templateUrl: '/resources/partials/ans.html',
+                    controller:"ansCtrl"
+                }).when('/ans', {
+                    templateUrl: '/resources/partials/ans.html',
+                    controller:"ansCtrl"
+                }).when('/que', {
+                    templateUrl: '/resources/partials/que.ejs',
+                    controller:"queCtrl"
+                }).otherwise({
+                    redirectTo:'/'
+                });
+            }]);
+    </script>
+    <script type="text/javascript" src="/resources/controller/homeCtrl.js"></script>
+    <script type="text/javascript" src="/resources/controller/ansCtrl.js"></script>
+    <script type="text/javascript" src="/resources/controller/queCtrl.js"></script>
+</body>
+</html>
