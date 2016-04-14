@@ -6,15 +6,17 @@ package zhihu.domain;
 public class Question {
 	private long quesID;
 	private long userID;
+	private long views;
 	private String quesTitle;
 	private String quesContent;
 
 	public Question() {
 	}
 
-	public Question(long quesID, long userID, String quesTitle, String quesContent) {
+	public Question(long quesID, long userID, long views,String quesTitle, String quesContent) {
 		this.quesID = quesID;
 		this.userID = userID;
+		this.views = views;
 		this.quesTitle = quesTitle;
 		this.quesContent = quesContent;
 	}
@@ -49,5 +51,13 @@ public class Question {
 
 	public void setQuesContent(String quesContent) {
 		this.quesContent = quesContent;
+	}
+
+	public long getViews() {
+		return views;
+	}
+
+	public void setViews(long views) {
+		this.views = views;
 	}
 }

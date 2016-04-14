@@ -24,7 +24,7 @@ public class AnswerDao {
 
 	public String QUERY_ANSWER_BY_USER_ID ="select * from answer where user_id=? limit 10";
 
-	public List<Answer> queryAnswerByUserID(long userID){
+	public List<Answer> findAnswersByUserID(long userID){
 		try{
 			List<Answer> queryAnswers = jdbcOperations.query(
 					QUERY_ANSWER_BY_USER_ID,
@@ -40,10 +40,9 @@ public class AnswerDao {
 
 	private class AnswerRowMapper implements RowMapper<Answer> {
 
-
 		public Answer mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-			Question question = questionDao.findQuestionByQueId(rs.getLong("ques_id"));
+			Question question = questionDao.findOneQuestionByQueId(rs.getLong("ques_id"));
 			return new Answer(
 					rs.getLong("ans_id"),
 					rs.getLong("user_id"),

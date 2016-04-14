@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import zhihu.dao.AnswerDao;
+import zhihu.dao.QuestionDao;
 import zhihu.domain.Answer;
+import zhihu.domain.Question;
 import zhihu.domain.User;
 
 import javax.servlet.http.HttpSession;
@@ -22,6 +24,9 @@ public class HomeController {
 	@Autowired
 	AnswerDao answerDao;
 
+	@Autowired
+	QuestionDao questionDao;
+
 	@RequestMapping(value = "/home",method = RequestMethod.GET)
 	public String home(HttpSession session, Model model){
 		User user = (User) session.getAttribute("user");
@@ -31,12 +36,19 @@ public class HomeController {
 	}
 
 
-	@RequestMapping(value = "answers",method = RequestMethod.GET)
+	@RequestMapping(value = "/answers",method = RequestMethod.GET)
 	@ResponseBody
 	public List<Answer> getAnswers(HttpSession session){
 		User user = (User) session.getAttribute("user");
-		List<Answer> answers = answerDao.queryAnswerByUserID(user.getUserID());
-
+		List<Answer> answers = answerDao.findAnswersByUserID(user.getUserID());
 		return answers;
+	}
+
+	@RequestMapping(value = "/question",method = RequestMethod.GET)
+	@ResponseBody
+	public List<Question> getQustions(HttpSession session){
+		User user = (User) session.getAttribute("user");
+		List<Question> questions = questionDao.findQuestionsByUserID(user.getUserID());
+		return questions;
 	}
 }

@@ -21,8 +21,9 @@ var questions=[
 angular.module('home')
     .constant("queUrl","/question")
     .controller('queCtrl', function($scope,$http,queUrl){
-        //$scope.questions=questions;
+        $scope.questions={};
         $http.get(queUrl).success(function(data){
+            console.log(data);
             $scope.questions=data;
         }).error(function(err){
            alert(err);
