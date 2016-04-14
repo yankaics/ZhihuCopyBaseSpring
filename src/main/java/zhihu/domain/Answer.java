@@ -9,6 +9,7 @@ public class Answer {
 	private long quesID;
 	private String ansContent;
 	private int upvote;
+	private Question question;
 
 	public Answer(long ansID, long userID,long quesID,String ansContent,int upvote) {
 		this.ansID = ansID;
@@ -16,6 +17,15 @@ public class Answer {
 		this.quesID = quesID;
 		this.ansContent = ansContent;
 		this.upvote = upvote;
+	}
+
+	public Answer(long ansID, long userID,long quesID,String ansContent,int upvote,Question question) {
+		this.ansID = ansID;
+		this.userID = userID;
+		this.quesID = quesID;
+		this.ansContent = ansContent;
+		this.upvote = upvote;
+		this.question = question;
 	}
 
 	public long getAnsID() {
@@ -56,5 +66,13 @@ public class Answer {
 
 	public void setUpvote(int upvote) {
 		this.upvote = upvote;
+	}
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
 	}
 }

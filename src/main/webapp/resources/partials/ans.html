@@ -1,15 +1,27 @@
-<div class="content panel panel-default ">
+<div class="content panel panel-default " xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="panel-heading">回答</div>
     <div class="panel-body">
-        <div class="answer-content" ng-repeat="ans in answers">
+        <!--<div class="answer-content" th:each=" answer:${answerList}">-->
+            <!--<div class="row ans-row">-->
+                <!--<div class="ans-up col-md-4 text-center">-->
+                    <!--<h6 class="up-count"><strong th:text ="${answer.upvote}">10</strong></h6>-->
+                    <!--<h6 class="up-name"><strong>赞同</strong></h6>-->
+                <!--</div>-->
+                <!--<div class="col-content col-md-10  ">-->
+                    <!--<a th:href="@{/question/${answer.quesID}}"><span class="ans-title"><strong>hellohello</strong></span></a>-->
+                    <!--<h6 class="ans-content" th:text ="${answer.ansContent}">123</h6>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="answer-content" ng-repeat="answer in answers">
             <div class="row ans-row">
                 <div class="ans-up col-md-4 text-center">
-                    <h6 class="up-count"><strong>{{ans.ups_number}}</strong></h6>
+                    <h6 class="up-count"><strong>{{answer.upvote}}</strong></h6>
                     <h6 class="up-name"><strong>赞同</strong></h6>
                 </div>
                 <div class="col-content col-md-10  ">
-                    <a href="/question/{{ans.question_id}}"><span class="ans-title"><strong>{{ans.question_name}}</strong></span></a>
-                    <h6 class="ans-content">{{ans.content}}</h6>
+                    <a href="/question/{{answer.quesID}}"><span class="ans-title"><strong>{{answer.question.quesTitle}}</strong></span></a>
+                    <h6 class="ans-content">{{answer.ansContent}}</h6>
                 </div>
             </div>
         </div>

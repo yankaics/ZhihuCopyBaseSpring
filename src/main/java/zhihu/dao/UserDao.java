@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import zhihu.domain.User;
 import zhihu.util.MD5Util;
 
-import javax.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -21,42 +20,38 @@ public class UserDao {
 	@Autowired
 	private JdbcOperations jdbcOperations;
 
+
+
 	private static final String INSERT_USER = "insert into user (username, password) values (?, ?)";
-	private static final String QUERY_USER_BY_USERNAME = "select user_id, username, password from user where username=?";
+	private static final String QUERY_USER_BY_USERNAME = "select * from user where username=?";
 
 
 
-	public void registerNewUser(User user){
+	public User registerNewUser(User user){
 		jdbcOperations.update(INSERT_USER,
 				user.getUsername(),
 				MD5Util.MD5(user.getPassword()));
+		return findUser(user);
 	}
 
-
-	public String login(User user, HttpSession session){
-		User queryUser = null;
+	public User findUser(User user){
 		try {
-			queryUser = jdbcOperations.queryForObject(
+			User queryUser = jdbcOperations.queryForObject(
 					QUERY_USER_BY_USERNAME,
 					new UserRowMapper(),
 					user.getUsername());
+			return queryUser;
 		}
 		catch (EmptyResultDataAccessException e){
-			return "不存在该账户";
-		}
-
-		if(queryUser.getPassword().equals(MD5Util.MD5(user.getPassword()))){
-			session.setAttribute("user",user);
-			return "success";
-		}
-		else {
-			return "密码错误";
+			return null;
 		}
 
 	}
 
-	private static class UserRowMapper implements RowMapper<User> {
+
+	private class UserRowMapper implements RowMapper<User> {
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+
 			return new User(
 					rs.getLong("user_id"),
 					rs.getString("username"),
