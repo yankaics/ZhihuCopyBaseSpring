@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import zhihu.domain.Answer;
 import zhihu.domain.Question;
+import zhihu.domain.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,6 +22,8 @@ public class AnswerDao {
 	private JdbcOperations jdbcOperations;
 	@Autowired
 	private QuestionDao questionDao;
+	@Autowired
+	private UserDao userDao;
 
 	public String QUERY_ANSWER_BY_USER_ID ="select * from answer where user_id=? limit 10";
 
@@ -57,13 +60,15 @@ public class AnswerDao {
 
 		public Answer mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Question question = questionDao.findOneQuestionByQueId(rs.getLong("ques_id"));
+			User user = userDao.findUserByUserID(rs.getLong("user_id"));
 			return new Answer(
 					rs.getLong("ans_id"),
 					rs.getLong("user_id"),
 					rs.getLong("ques_id"),
 					rs.getString("ans_content"),
 					rs.getInt("upvote"),
-					question);
+					question,
+					user);
 		}
 	}
 }

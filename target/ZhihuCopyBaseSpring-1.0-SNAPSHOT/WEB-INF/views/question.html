@@ -34,7 +34,7 @@
             </div>
             <div class="ans-main" th:each="ans :${answerList}" >
                 <div class="ans-main-top">
-                    <span class="h3"><strong th:text="${ans.userID}">zj</strong></span>
+                    <span class="h3"><strong th:text="${ans.user.username}">zj</strong></span>
                     <img  class="small_avatar pull-right" src="/resources/images/static/liukanshan.png"/>
                 </div>
                 <div class="ans-main-content">

@@ -50,7 +50,7 @@ public class LoginController {
 	}
 
 	public String login(User user, HttpSession session){
-		User queryUser = userDao.findUser(user);
+		User queryUser = userDao.findUserByUserName(user.getUsername());
 
 		if (queryUser==null)
 			return "不存在该账户";

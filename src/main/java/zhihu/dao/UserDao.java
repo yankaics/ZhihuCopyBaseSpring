@@ -24,22 +24,22 @@ public class UserDao {
 
 	private static final String INSERT_USER = "insert into user (username, password) values (?, ?)";
 	private static final String QUERY_USER_BY_USERNAME = "select * from user where username=?";
-
+	private static final String QUERY_USER_BY_USER_ID = "select * from user where user_id=?";
 
 
 	public User registerNewUser(User user){
 		jdbcOperations.update(INSERT_USER,
 				user.getUsername(),
 				MD5Util.MD5(user.getPassword()));
-		return findUser(user);
+		return findUserByUserName(user.getUsername());
 	}
 
-	public User findUser(User user){
+	public User findUserByUserName(String username){
 		try {
 			User queryUser = jdbcOperations.queryForObject(
 					QUERY_USER_BY_USERNAME,
 					new UserRowMapper(),
-					user.getUsername());
+					username);
 			return queryUser;
 		}
 		catch (EmptyResultDataAccessException e){
@@ -48,6 +48,19 @@ public class UserDao {
 
 	}
 
+	public User findUserByUserID(long user_id){
+		try {
+			User queryUser = jdbcOperations.queryForObject(
+					QUERY_USER_BY_USER_ID,
+					new UserRowMapper(),
+					user_id);
+			return queryUser;
+		}
+		catch (EmptyResultDataAccessException e){
+			return null;
+		}
+
+	}
 
 	private class UserRowMapper implements RowMapper<User> {
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
