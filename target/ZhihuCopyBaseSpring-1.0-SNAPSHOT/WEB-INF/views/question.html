@@ -43,8 +43,8 @@
                 <div class="up-and-down">
                     <div class="up" >
                         <span class="glyphicon glyphicon-triangle-top"  style="cursor:pointer" th:attr="ng-click='upAndDown(\''+${ans.upvote}+'\',true);'"/>
-                        <div class="h5 up-cont" th:text="${ans.upvote}" ng-model="ans_id">0</div>
                     </div>
+                    <div class="h5 up-cont" th:text="${ans.upvote}" ng-model="ans_id">100</div>
                     <div class="down">
                         <span class="glyphicon glyphicon-triangle-bottom"  style="cursor:pointer" th:attr="ng-click='upAndDown(\''+${ans.upvote}+'\',false);'"/>
                     </div>

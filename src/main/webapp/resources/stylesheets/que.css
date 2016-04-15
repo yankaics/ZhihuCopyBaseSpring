@@ -71,16 +71,20 @@
     padding-right: 12px;
     padding-left: 10px;
     border-radius: 5px;
+    padding-bottom: 5px
 }
 .up:hover{
     background-color: #698dbe;
     color: white;
 }
 .up-cont{
-    margin-left: 2px;
-    margin-top: 3px;
-    margin-bottom: 5px;
+    margin-top: 0px;
+    margin-bottom: 3px;
+    padding: 0px;
     padding-bottom: 2px;
+    background-color: #eff6fa;
+    text-align: center;
+    color: #698ebf;
 }
 .down{
     margin-top: 5px;
