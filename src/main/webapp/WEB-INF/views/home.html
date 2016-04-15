@@ -61,13 +61,16 @@
             function ($routeProvider) {
                 $routeProvider.when('/', {
                     templateUrl: '/resources/partials/ans.html',
-                    controller:"ansCtrl"
+                    controller:"ansCtrl",
+                    activeMenu: "Home"
                 }).when('/ans', {
                     templateUrl: '/resources/partials/ans.html',
-                    controller:"ansCtrl"
+                    controller:"ansCtrl",
+                    activeMenu: "Ans"
                 }).when('/que', {
                     templateUrl: '/resources/partials/que.html',
-                    controller:"queCtrl"
+                    controller:"queCtrl",
+                    activeMenu: "Que"
                 }).otherwise({
                     redirectTo:'/'
                 });
