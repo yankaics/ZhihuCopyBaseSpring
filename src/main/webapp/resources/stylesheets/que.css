@@ -40,6 +40,13 @@
 .ans-main-top .h3{
     font-size: 14px;
 }
+.ans-name{
+    position: relative;
+    top: 5px;
+}
+.write-ans-top{
+    margin-bottom: 20px;
+}
 .small_avatar{
     width: 25px;
     height: 25px;
@@ -64,27 +71,26 @@
     left: -40px;
     top:5px;
 }
-.up{
-    width: 32px;
+.hover-block{
     background-color: #eff6fa;
-    color: #698ebf;
-    padding-right: 12px;
-    padding-left: 10px;
     border-radius: 5px;
-    padding-bottom: 5px
+    color: #698ebf;
 }
-.up:hover{
+.hover-block:hover{
     background-color: #698dbe;
     color: white;
 }
+.up{
+    width: 32px;
+    padding-right: 12px;
+    padding-left: 10px;
+    padding-bottom: 5px
+}
 .up-cont{
-    margin-top: 0px;
+    margin-top: -3px;
     margin-bottom: 3px;
-    padding: 0px;
-    padding-bottom: 2px;
-    background-color: #eff6fa;
+    padding: 0px 0px 2px 0px;
     text-align: center;
-    color: #698ebf;
 }
 .down{
     margin-top: 5px;
@@ -96,6 +102,11 @@
     border-radius: 5px;
 }
 .down:hover{
+    background-color: #698dbe;
+    color: white;
+}
+
+.active {
     background-color: #698dbe;
     color: white;
 }

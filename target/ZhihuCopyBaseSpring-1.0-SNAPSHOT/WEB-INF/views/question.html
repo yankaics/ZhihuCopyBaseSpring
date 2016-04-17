@@ -18,7 +18,9 @@
         <div class="left-content col-md-8 " ng-controller="ansQuesCtrl">
             <div class="que-content">
                 <div class="tag">
-                    <!--<a href="#"><span class="badge badge-tag"><%=que.tags[0]%></span></a>-->
+                    <a href="#"><span class="badge badge-tag" th:text="${question.tags.tag1}"/></a>
+                    <a href="#"><span class="badge badge-tag" th:text="${question.tags.tag2}"/></a>
+                    <a href="#"><span class="badge badge-tag" th:text="${question.tags.tag3}"/></a>
                 </div>
                 <h2 class="que-title"><strong th:text="${question.quesTitle}">TestTile</strong></h2>
                 <div class="que-content">
@@ -32,27 +34,29 @@
             <div class="ans-top">
                 <h5><strong>X个回答</strong></h5>
             </div>
-            <div class="ans-main" th:each="ans :${answerList}" >
+            <div class="ans-main" ng-repeat="ans in answerList" >
                 <div class="ans-main-top">
-                    <span class="h3"><strong th:text="${ans.user.username}">zj</strong></span>
+                    <span class="h3"><strong>{{ans.user.username}}</strong></span>
                     <img  class="small_avatar pull-right" src="/resources/images/static/liukanshan.png"/>
                 </div>
                 <div class="ans-main-content">
-                    <p th:text="${ans.ansContent}">TestContent</p>
+                    <p>{{ans.ansContent}}</p>
                 </div>
-                <div class="up-and-down">
-                    <div class="up" >
-                        <span class="glyphicon glyphicon-triangle-top"  style="cursor:pointer" th:attr="ng-click='upAndDown(\''+${ans.upvote}+'\',true);'"/>
+                <div class="up-and-down" >
+                    <div class="hover-block" ng-class="{'active': ans.upActive}" style="cursor:pointer" ng-click="upAndDown(ans.ansID,true);">
+                        <div class="up" >
+                            <span class="glyphicon glyphicon-triangle-top"/>
+                        </div>
+                        <div class="h5 up-cont">{{ans.upvote}}</div>
                     </div>
-                    <div class="h5 up-cont" th:text="${ans.upvote}" ng-model="ans_id">100</div>
-                    <div class="down">
-                        <span class="glyphicon glyphicon-triangle-bottom"  style="cursor:pointer" th:attr="ng-click='upAndDown(\''+${ans.upvote}+'\',false);'"/>
+                    <div class="down" ng-class="{'active': ans.downActive}">
+                        <span class="glyphicon glyphicon-triangle-bottom"  style="cursor:pointer" ng-click="upAndDown(ans.ansID,false);"/>
                     </div>
                 </div>
             </div>
             <div class="write-ans" >
                 <div class="write-ans-top">
-                    <span class="h3" th:text="${session.user.username}">Threezj</span>
+                    <span class="h3 ans-name" th:text="${session.user.username}">Threezj</span>
                     <img  class="small_avatar pull-right" src="/resources/images/static/liukanshan.png"/>
                 </div>
                 <form ng-submit="ansQue()" method="post" class="write-ans-content">
@@ -68,12 +72,33 @@
                 <span userID="warning">抱歉，这边正在紧张的施工…</span>
         </div>
     </div>
-     <script>
-
+     <script th:inline="javascript">
+         //<![CDATA[
          var app=angular.module("question",[]);
 
          app.controller("ansQuesCtrl",function($scope,$http,$location){
+
+             $scope.answerList={};
+
+             $http({
+                         method: 'GET',
+                         url: $location.absUrl()+"/answers",
+                }
+             ).success(function (data) {
+                 $scope.answerList=data;
+                 for(var i=0 ;i < $scope.answerList.length ;i++){
+                     $scope.answerList[i].upActive=false;
+                     $scope.answerList[i].downActive=false;
+                 }
+                 console.log(data);
+             }).error(function (data) {
+                 alert("error");
+                 alert(data);
+                 console.log(data);
+             });
+
              $scope.ansContent="";
+
              $scope.ansQue=function(){
 
                 $http({
@@ -93,26 +118,58 @@
                 });
              };
 
-             $scope.upAndDown=function(ans_id,upOrDown){
-                 $http({
-                         method: 'POST',
-                         url: $location.absUrl()+"/answer",
-                         data: {
-                             ans_content: $scope.ansContent,
-                             ans_id:ans_id,
-                             upOrDown:upOrDown,
+             $scope.upvote = 0;
+             $scope.upActive =false;
+             $scope.downActive =false;
+             $scope.upAndDown=function(ansID,upOrDown){
+                 if(upOrDown){
+                     $scope.upActive = !$scope.upActive;
+                 }
+                 else{
+                     var answers = $scope.answerList;
+                     $scope.downActive = !$scope.downActive;
+                     for(var i=0 ;i < answers.length ;i++){
+                         if(answers[i].ansID===ansID){
+                             answers[i].downActive = $scope.downActive;
+                             break;
                          }
-                    }
-                 ).success(function (data) {
-                     $scope.answers=data;
-                     console.log(data);
-                 }).error(function (data) {
-                     alert("error");
-                     alert(data);
-                 });
+                     }
+                 }
+                 if(upOrDown){
+                     $http({
+                                 method: 'POST',
+                                 url: "/question/upvote",
+                                 data: {
+                                     ans_id:ansID,
+                                     upOrDown:$scope.upActive,
+                                 }
+                             }
+                     ).success(function (data) {
+                         var answers = $scope.answerList;
+                         for(var i=0 ;i < answers.length ;i++){
+                             if(answers[i].ansID===ansID){
+                                 answers[i].downActive = $scope.downActive;
+                                 answers[i].upActive = $scope.upActive;
+                                 if($scope.upActive){
+                                     answers[i].upvote++;
+                                 }
+                                 else{
+                                     answers[i].upvote--;
+                                 }
+                                 break;
+                             }
+                         }
+
+                         console.log(data);
+                     }).error(function (data) {
+                         alert("error");
+                         alert(data);
+                         console.log(data);
+                     });
+                 }
              }
          });
-
+        //]]>
      </script>
 </body>
 </html>

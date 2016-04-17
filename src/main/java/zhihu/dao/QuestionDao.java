@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import zhihu.domain.Question;
+import zhihu.domain.Tags;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +19,9 @@ import java.util.List;
 public class QuestionDao {
 	@Autowired
 	private JdbcOperations jdbcOperations;
+
+	@Autowired
+	private TagsDao tagsDao;
 
 	private final String FIND_QUESTION_BY_QUE_ID = "select * from question where ques_id = ?";
 
@@ -49,14 +53,19 @@ public class QuestionDao {
 		}
 	}
 
-	private static class QuestionRowMapper implements RowMapper<Question> {
+	private class QuestionRowMapper implements RowMapper<Question> {
+
 		public Question mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+			Tags tags = tagsDao.findTagsByQuesID(rs.getLong("ques_id"));
+
 			return new Question(
 					rs.getLong("ques_id"),
 					rs.getLong("user_id"),
 					rs.getLong("views"),
 					rs.getString("ques_title"),
-					rs.getString("ques_content"));
+					rs.getString("ques_content"),
+					tags);
 		}
 	}
 }

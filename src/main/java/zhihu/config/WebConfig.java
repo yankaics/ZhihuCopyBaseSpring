@@ -49,6 +49,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		templateResolver.setSuffix(".html");
 		templateResolver.setTemplateMode("HTML5");
 		templateResolver.setCharacterEncoding("utf-8");
+		templateResolver.setCacheable(false);
 		return templateResolver;
 	}
 

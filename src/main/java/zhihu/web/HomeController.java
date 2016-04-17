@@ -3,13 +3,12 @@ package zhihu.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import zhihu.dao.AnswerDao;
 import zhihu.dao.QuestionDao;
 import zhihu.domain.Answer;
 import zhihu.domain.Question;
+import zhihu.domain.UpvoteFom;
 import zhihu.domain.User;
 
 import javax.servlet.http.HttpSession;
@@ -44,6 +43,7 @@ public class HomeController {
 		return answers;
 	}
 
+
 	@RequestMapping(value = "/question",method = RequestMethod.GET)
 	@ResponseBody
 	public List<Question> getQustions(HttpSession session){
@@ -51,4 +51,6 @@ public class HomeController {
 		List<Question> questions = questionDao.findQuestionsByUserID(user.getUserID());
 		return questions;
 	}
+
+
 }

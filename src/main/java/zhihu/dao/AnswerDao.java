@@ -25,9 +25,34 @@ public class AnswerDao {
 	@Autowired
 	private UserDao userDao;
 
-	public String QUERY_ANSWER_BY_USER_ID ="select * from answer where user_id=? limit 10";
+	private final String QUERY_ANSWER_BY_USER_ID ="select * from answer where user_id=? limit 10";
 
-	public String QUERY_ANSWER_BY_QUES_ID ="select * from answer where ques_id=? limit 10";
+	private final  String QUERY_ANSWER_BY_QUES_ID ="select * from answer where ques_id=? limit 10";
+
+	private final  String QUERY_ANSWER_BY_ANS_ID ="select * from answer where ans_id=?";
+
+	private final String UPDATE_UPVOTE_PLUS_ONE = "UPDATE answer SET upvote = upvote+1 where ans_id=?";
+	private final String UPDATE_UPVOTE_CUT_ONE = "UPDATE answer SET upvote = upvote-1 where ans_id=?";
+
+	public Answer findAnswersByAnsID(long ansID){
+		try{
+			Answer queryAnswers = jdbcOperations.queryForObject(
+					QUERY_ANSWER_BY_ANS_ID,
+					new AnswerDao.AnswerRowMapper(),
+					ansID);
+			return queryAnswers;
+		}
+		catch (EmptyResultDataAccessException e){
+			return null;
+		}
+	}
+
+	public void updateUpvoteNumber(long ansID,boolean upOrDown){
+		if(upOrDown)
+			jdbcOperations.update(UPDATE_UPVOTE_PLUS_ONE,ansID);
+		else
+			jdbcOperations.update(UPDATE_UPVOTE_CUT_ONE,ansID);
+	}
 
 	public List<Answer> findAnswersByUserID(long userID){
 		try{

@@ -9,6 +9,7 @@ public class Question {
 	private long views;
 	private String quesTitle;
 	private String quesContent;
+	private Tags tags;
 
 	public Question() {
 	}
@@ -19,6 +20,15 @@ public class Question {
 		this.views = views;
 		this.quesTitle = quesTitle;
 		this.quesContent = quesContent;
+	}
+
+	public Question(long quesID, long userID, long views,String quesTitle, String quesContent,Tags tags) {
+		this.quesID = quesID;
+		this.userID = userID;
+		this.views = views;
+		this.quesTitle = quesTitle;
+		this.quesContent = quesContent;
+		this.tags = tags;
 	}
 
 	public long getQuesID() {
@@ -59,5 +69,13 @@ public class Question {
 
 	public void setViews(long views) {
 		this.views = views;
+	}
+
+	public Tags getTags() {
+		return tags;
+	}
+
+	public void setTags(Tags tags) {
+		this.tags = tags;
 	}
 }
