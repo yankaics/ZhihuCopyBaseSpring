@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import zhihu.domain.Answer;
 import zhihu.domain.Question;
+import zhihu.domain.Upvote;
 import zhihu.domain.User;
 
 import java.sql.ResultSet;
@@ -24,6 +25,8 @@ public class AnswerDao {
 	private QuestionDao questionDao;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private UpvoteDao upvoteDao;
 
 	private final String QUERY_ANSWER_BY_USER_ID ="select * from answer where user_id=? limit 10";
 
@@ -31,8 +34,8 @@ public class AnswerDao {
 
 	private final  String QUERY_ANSWER_BY_ANS_ID ="select * from answer where ans_id=?";
 
-	private final String UPDATE_UPVOTE_PLUS_ONE = "UPDATE answer SET upvote = upvote+1 where ans_id=?";
-	private final String UPDATE_UPVOTE_CUT_ONE = "UPDATE answer SET upvote = upvote-1 where ans_id=?";
+	private final String UPDATE_UPVOTE_PLUS_ONE = "UPDATE answer SET upvote_number = upvote_number+1 where ans_id=?";
+	private final String UPDATE_UPVOTE_CUT_ONE = "UPDATE answer SET upvote_number = upvote_number-1 where ans_id=?";
 
 	public Answer findAnswersByAnsID(long ansID){
 		try{
@@ -47,8 +50,8 @@ public class AnswerDao {
 		}
 	}
 
-	public void updateUpvoteNumber(long ansID,boolean upOrDown){
-		if(upOrDown)
+	public void updateUpNumber(long ansID, Upvote upvote){
+		if(upvote.isUp())
 			jdbcOperations.update(UPDATE_UPVOTE_PLUS_ONE,ansID);
 		else
 			jdbcOperations.update(UPDATE_UPVOTE_CUT_ONE,ansID);
@@ -67,11 +70,11 @@ public class AnswerDao {
 		}
 	}
 
-	public List<Answer> findAnswersByQuesID(long quesID){
+	public List<Answer> findAnswersByQuesID(long quesID,long current_user_id){
 		try{
 			List<Answer> queryAnswers = jdbcOperations.query(
 					QUERY_ANSWER_BY_QUES_ID,
-					new AnswerDao.AnswerRowMapper(),
+					new AnswerDao.AnswerRowMapper(current_user_id),
 					quesID);
 			return queryAnswers;
 		}
@@ -83,17 +86,32 @@ public class AnswerDao {
 
 	private class AnswerRowMapper implements RowMapper<Answer> {
 
+		private long currentUserId;
+
+		public AnswerRowMapper(){
+
+		}
+
+		public AnswerRowMapper(long currentUserId){
+			this.currentUserId = currentUserId;
+		}
+
 		public Answer mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Question question = questionDao.findOneQuestionByQueId(rs.getLong("ques_id"));
 			User user = userDao.findUserByUserID(rs.getLong("user_id"));
-			return new Answer(
-					rs.getLong("ans_id"),
-					rs.getLong("user_id"),
-					rs.getLong("ques_id"),
-					rs.getString("ans_content"),
-					rs.getInt("upvote"),
-					question,
-					user);
+			Upvote upvote = upvoteDao.queryIsUpvoteByAnsIdAndUserId(rs.getLong("ans_id"),currentUserId);
+			Answer answer = new Answer(
+								rs.getLong("ans_id"),
+								rs.getLong("user_id"),
+								rs.getLong("ques_id"),
+								rs.getString("ans_content"),
+								rs.getInt("upvote_number"),
+								question,
+								user);
+
+			answer.setUpvote(upvote);
+
+			return answer;
 		}
 	}
 }

@@ -4,7 +4,7 @@
         <!--<div class="answer-content" th:each=" answer:${answerList}">-->
             <!--<div class="row ans-row">-->
                 <!--<div class="ans-up col-md-4 text-center">-->
-                    <!--<h6 class="up-count"><strong th:text ="${answer.upvote}">10</strong></h6>-->
+                    <!--<h6 class="up-count"><strong th:text ="${answer.upvoteNumber}">10</strong></h6>-->
                     <!--<h6 class="up-name"><strong>赞同</strong></h6>-->
                 <!--</div>-->
                 <!--<div class="col-content col-md-10  ">-->
@@ -16,7 +16,7 @@
         <div class="answer-content" ng-repeat="answer in answers">
             <div class="row ans-row">
                 <div class="ans-up col-md-4 text-center">
-                    <h6 class="up-count"><strong>{{answer.upvote}}</strong></h6>
+                    <h6 class="up-count"><strong>{{answer.upvoteNumber}}</strong></h6>
                     <h6 class="up-name"><strong>赞同</strong></h6>
                 </div>
                 <div class="col-content col-md-10  ">

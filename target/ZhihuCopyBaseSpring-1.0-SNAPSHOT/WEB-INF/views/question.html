@@ -43,14 +43,14 @@
                     <p>{{ans.ansContent}}</p>
                 </div>
                 <div class="up-and-down" >
-                    <div class="hover-block" ng-class="{'active': ans.upActive}" style="cursor:pointer" ng-click="upAndDown(ans.ansID,true);">
+                    <div class="hover-block" ng-class="{'active': ans.upvote.up}" style="cursor:pointer" ng-click="up(ans);">
                         <div class="up" >
                             <span class="glyphicon glyphicon-triangle-top"/>
                         </div>
-                        <div class="h5 up-cont">{{ans.upvote}}</div>
+                        <div class="h5 up-cont">{{ans.upvoteNumber}}</div>
                     </div>
-                    <div class="down" ng-class="{'active': ans.downActive}">
-                        <span class="glyphicon glyphicon-triangle-bottom"  style="cursor:pointer" ng-click="upAndDown(ans.ansID,false);"/>
+                    <div class="down" ng-class="{'active': ans.upvote.down}" ng-click="down(ans);" style="cursor:pointer">
+                        <span class="glyphicon glyphicon-triangle-bottom"  />
                     </div>
                 </div>
             </div>
@@ -86,10 +86,6 @@
                 }
              ).success(function (data) {
                  $scope.answerList=data;
-                 for(var i=0 ;i < $scope.answerList.length ;i++){
-                     $scope.answerList[i].upActive=false;
-                     $scope.answerList[i].downActive=false;
-                 }
                  console.log(data);
              }).error(function (data) {
                  alert("error");
@@ -118,56 +114,52 @@
                 });
              };
 
-             $scope.upvote = 0;
-             $scope.upActive =false;
-             $scope.downActive =false;
-             $scope.upAndDown=function(ansID,upOrDown){
-                 if(upOrDown){
-                     $scope.upActive = !$scope.upActive;
-                 }
-                 else{
-                     var answers = $scope.answerList;
-                     $scope.downActive = !$scope.downActive;
-                     for(var i=0 ;i < answers.length ;i++){
-                         if(answers[i].ansID===ansID){
-                             answers[i].downActive = $scope.downActive;
-                             break;
+             $scope.up=function(ans){
+                 var upvote = ans.upvote;
+                 $http({
+                             method: 'POST',
+                             url: "/question/up",
+                             data: upvote
                          }
-                     }
-                 }
-                 if(upOrDown){
-                     $http({
-                                 method: 'POST',
-                                 url: "/question/upvote",
-                                 data: {
-                                     ans_id:ansID,
-                                     upOrDown:$scope.upActive,
-                                 }
-                             }
-                     ).success(function (data) {
-                         var answers = $scope.answerList;
-                         for(var i=0 ;i < answers.length ;i++){
-                             if(answers[i].ansID===ansID){
-                                 answers[i].downActive = $scope.downActive;
-                                 answers[i].upActive = $scope.upActive;
-                                 if($scope.upActive){
-                                     answers[i].upvote++;
-                                 }
-                                 else{
-                                     answers[i].upvote--;
-                                 }
-                                 break;
-                             }
-                         }
+                 ).success(function (data) {
+                     upvote.up=!upvote.up;
+                     if(upvote.up)
+                         ans.upvoteNumber++;
+                     else
+                         ans.upvoteNumber--;
 
-                         console.log(data);
-                     }).error(function (data) {
-                         alert("error");
-                         alert(data);
-                         console.log(data);
-                     });
-                 }
-             }
+                     if(upvote.up && upvote.down){
+                         upvote.down = !upvote.down;
+                     }
+                     console.log(data);
+                 }).error(function (data) {
+                     alert("error");
+                     alert(data);
+                     console.log(data);
+                 });
+             };
+
+             $scope.down=function(ans){
+                 var upvote = ans.upvote;
+                 $http({
+                             method: 'POST',
+                             url: "/question/down",
+                             data: upvote
+                    }
+                 ).success(function (data) {
+                     upvote.down = !upvote.down;
+
+                     if(upvote.up && upvote.down){
+                         ans.upvoteNumber--;
+                         upvote.up = !upvote.up;
+                     }
+                     console.log(data);
+                 }).error(function (data) {
+                     alert("error");
+                     alert(data);
+                     console.log(data);
+                 });
+             };
          });
         //]]>
      </script>

@@ -8,7 +8,6 @@ import zhihu.dao.AnswerDao;
 import zhihu.dao.QuestionDao;
 import zhihu.domain.Answer;
 import zhihu.domain.Question;
-import zhihu.domain.UpvoteFom;
 import zhihu.domain.User;
 
 import javax.servlet.http.HttpSession;

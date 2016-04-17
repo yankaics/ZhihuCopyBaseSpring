@@ -8,27 +8,29 @@ public class Answer {
 	private long userID;
 	private long quesID;
 	private String ansContent;
-	private int upvote;
+	private int upvoteNumber;
 	private Question question;
 	private User user;
+	private Upvote upvote;
 
-	public Answer(long ansID, long userID,long quesID,String ansContent,int upvote) {
+	public Answer(long ansID, long userID,long quesID,String ansContent,int upvoteNumber) {
 		this.ansID = ansID;
 		this.userID = userID;
 		this.quesID = quesID;
 		this.ansContent = ansContent;
-		this.upvote = upvote;
+		this.upvoteNumber = upvoteNumber;
 	}
 
-	public Answer(long ansID, long userID,long quesID,String ansContent,int upvote,Question question,User user) {
+	public Answer(long ansID, long userID, long quesID, String ansContent, int upvoteNumber, Question question, User user) {
 		this.ansID = ansID;
 		this.userID = userID;
 		this.quesID = quesID;
 		this.ansContent = ansContent;
-		this.upvote = upvote;
+		this.upvoteNumber = upvoteNumber;
 		this.question = question;
 		this.user = user;
 	}
+
 
 	public long getAnsID() {
 		return ansID;
@@ -62,12 +64,12 @@ public class Answer {
 		this.quesID = quesID;
 	}
 
-	public int getUpvote() {
-		return upvote;
+	public int getUpvoteNumber() {
+		return upvoteNumber;
 	}
 
-	public void setUpvote(int upvote) {
-		this.upvote = upvote;
+	public void setUpvoteNumber(int upvoteNumber) {
+		this.upvoteNumber = upvoteNumber;
 	}
 
 	public Question getQuestion() {
@@ -85,5 +87,13 @@ public class Answer {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Upvote getUpvote() {
+		return upvote;
+	}
+
+	public void setUpvote(Upvote upvote) {
+		this.upvote = upvote;
 	}
 }

@@ -6,10 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import zhihu.dao.AnswerDao;
 import zhihu.dao.QuestionDao;
-import zhihu.domain.Answer;
-import zhihu.domain.Question;
-import zhihu.domain.UpvoteFom;
+import zhihu.dao.UpvoteDao;
+import zhihu.domain.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -25,6 +25,9 @@ public class QuestionController {
 	@Autowired
 	AnswerDao answerDao;
 
+	@Autowired
+	UpvoteDao upvoteDao;
+
 	@RequestMapping("/{ques_id}")
 	public String question(@PathVariable long ques_id, Model model){
 		Question question = questionDao.findOneQuestionByQueId(ques_id);
@@ -34,15 +37,35 @@ public class QuestionController {
 
 	@RequestMapping("/{ques_id}/answers")
 	@ResponseBody
-	public List<Answer> getAnswers(@PathVariable long ques_id){
-		List<Answer> answers = answerDao.findAnswersByQuesID(ques_id);
+	public List<Answer> getAnswers(@PathVariable long ques_id, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		List<Answer> answers = answerDao.findAnswersByQuesID(ques_id,user.getUserID());
 		return answers;
 	}
 
-	@RequestMapping(value = "/upvote",method = RequestMethod.POST)
+	@RequestMapping(value = "/up",method = RequestMethod.POST)
 	@ResponseBody
-	public String upvote(@RequestBody UpvoteFom upvoteFom){
-		answerDao.updateUpvoteNumber(upvoteFom.getAns_id(),upvoteFom.isUpOrDown());
+	public String up(@RequestBody Upvote upvote){
+		upvote.setUp(!upvote.isUp());
+		if(upvote.isUp() && upvote.isDown()){
+			upvote.setDown(!upvote.isDown());
+		}
+
+		answerDao.updateUpNumber(upvote.getAnsID(),upvote);
+		upvoteDao.updateRecordForUpvote(upvote);
+		return "success";
+	}
+
+	@RequestMapping(value = "/down",method = RequestMethod.POST)
+	@ResponseBody
+	public String down(@RequestBody Upvote upvote){
+		upvote.setDown(!upvote.isDown());
+		if(upvote.isUp() && upvote.isDown()){
+			upvote.setUp(!upvote.isUp());
+			answerDao.updateUpNumber(upvote.getAnsID(),upvote);
+		}
+
+		upvoteDao.updateRecordForUpvote(upvote);
 		return "success";
 	}
 }
