@@ -17,10 +17,8 @@
     <div class="home-zhihu col-md-12 ">
         <div class="left-content col-md-8 " ng-controller="ansQuesCtrl">
             <div class="que-content">
-                <div class="tag">
-                    <a href="#"><span class="badge badge-tag" th:text="${question.tags.tag1}"/></a>
-                    <a href="#"><span class="badge badge-tag" th:text="${question.tags.tag2}"/></a>
-                    <a href="#"><span class="badge badge-tag" th:text="${question.tags.tag3}"/></a>
+                <div class="tag" th:each="tag : ${question.tags}">
+                    <a href="#"><span class="badge badge-tag" th:text="${tag}"/></a>
                 </div>
                 <h2 class="que-title"><strong th:text="${question.quesTitle}">TestTile</strong></h2>
                 <div class="que-content">

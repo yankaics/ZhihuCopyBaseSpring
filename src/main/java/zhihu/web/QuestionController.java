@@ -82,9 +82,8 @@ public class QuestionController {
 	@RequestMapping(value = "/ask",method = RequestMethod.POST)
 	public String askQuestion(HttpSession session, QuestionForm questionForm){
 		User user = (User) session.getAttribute("user");
-		Question question = new Question(user.getUserID(),questionForm.getQuesTitle(),questionForm.getQuesContent());
-		String tagString=questionForm.getTag();
-		Question newQuestion = questionDao.addNewQuestion(question,tagString);
+		Question newQuestion = questionDao.addNewQuestion(user.getUserID(),questionForm.getQuesTitle(),
+				questionForm.getQuesContent(),questionForm.getTags());
 		return "redirect:/question/"+newQuestion.getQuesID();
 	}
 }

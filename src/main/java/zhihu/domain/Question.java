@@ -9,7 +9,7 @@ public class Question {
 	private long views;
 	private String quesTitle;
 	private String quesContent;
-	private Tags tags;
+	private String[] tags;//逗号分隔
 
 	public Question() {
 	}
@@ -28,7 +28,7 @@ public class Question {
 		this.quesContent = quesContent;
 	}
 
-	public Question(long quesID, long userID, long views,String quesTitle, String quesContent,Tags tags) {
+	public Question(long quesID, long userID, long views,String quesTitle, String quesContent,String[] tags) {
 		this.quesID = quesID;
 		this.userID = userID;
 		this.views = views;
@@ -77,11 +77,11 @@ public class Question {
 		this.views = views;
 	}
 
-	public Tags getTags() {
+	public String[] getTags() {
 		return tags;
 	}
 
-	public void setTags(Tags tags) {
+	public void setTags(String[] tags) {
 		this.tags = tags;
 	}
 }

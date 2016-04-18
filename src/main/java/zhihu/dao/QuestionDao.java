@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import zhihu.domain.Question;
-import zhihu.domain.Tags;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,24 +19,22 @@ public class QuestionDao {
 	@Autowired
 	private JdbcOperations jdbcOperations;
 
-	@Autowired
-	private TagsDao tagsDao;
-
 	private final String FIND_QUESTION_BY_QUE_ID = "select * from question where ques_id = ?";
 
 	private String QUERY_QUESTION_BY_USER_ID ="select * from question where user_id=? limit 10";
 
-	private String ADD_NEW_QUESTION = "insert into question (ques_title,ques_content,user_id) values (?,?,?)";
+	private String ADD_NEW_QUESTION = "insert into question (ques_title,ques_content,user_id,tags) values (?,?,?,?)";
 
 	private final String SELECT_LAST_INSERT_QUESTION = "select * from question where ques_id = last_insert_id()";
 
-	public Question addNewQuestion(Question question,String tagString){
+	public Question addNewQuestion(long userID, String quesTitle, String quesContent, String tags){
 		jdbcOperations.update(ADD_NEW_QUESTION,
-				question.getQuesTitle(),
-				question.getQuesContent(),
-				question.getUserID());
+				quesTitle,
+				quesContent,
+				userID,
+				tags);
 		return jdbcOperations.queryForObject(SELECT_LAST_INSERT_QUESTION,
-				new QuestionRowMapper(tagString));
+				new QuestionRowMapper());
 	}
 
 	public Question findOneQuestionByQueId(long quesID){
@@ -67,19 +64,8 @@ public class QuestionDao {
 	}
 
 	private class QuestionRowMapper implements RowMapper<Question> {
-		private String tagString;
 
-		public QuestionRowMapper(){
-
-		}
-		public QuestionRowMapper(String tagString){
-			this.tagString = tagString;
-		}
 		public Question mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-			Tags tags = tagsDao.findTagsByQuesID(rs.getLong("ques_id"));
-			if(tags==null)
-				tags=tagsDao.addNewTags(rs.getLong("ques_id"),tagString);
 
 			return new Question(
 					rs.getLong("ques_id"),
@@ -87,7 +73,7 @@ public class QuestionDao {
 					rs.getLong("views"),
 					rs.getString("ques_title"),
 					rs.getString("ques_content"),
-					tags);
+					rs.getString("tags").split(","));
 		}
 	}
 }

@@ -6,7 +6,7 @@ package zhihu.domain;
 public class QuestionForm {
 	private String quesTitle;
 	private String quesContent;
-	private String tag;
+	private String tags;
 
 	public String getQuesTitle() {
 		return quesTitle;
@@ -24,11 +24,12 @@ public class QuestionForm {
 		this.quesContent = quesContent;
 	}
 
-	public String getTag() {
-		return tag;
+
+	public String getTags() {
+		return tags;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 }
