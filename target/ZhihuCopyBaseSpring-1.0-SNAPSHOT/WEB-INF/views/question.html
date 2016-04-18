@@ -96,22 +96,21 @@
              $scope.ansContent="";
 
              $scope.ansQue=function(){
-
-                $http({
+                 var answer ={};
+                 answer.ansContent = $scope.ansContent;
+                 $http({
                         method: 'POST',
-                        url: $location.absUrl()+"/answer",
-                        data: {
-                            ans_content: $scope.ansContent
-                        }
+                        url: $location.absUrl()+"/answerQuestion",
+                        data: answer
                     }
-                ).success(function (data) {
-                    $scope.answers.push(data);
+                 ).success(function (data) {
+                    $scope.answerList.push(data);
                     $scope.ansContent="";
-                    console.log(data.content);
-                }).error(function (data) {
+                    console.log(data);
+                 }).error(function (data) {
                     alert("error");
                     alert(data);
-                });
+                 });
              };
 
              $scope.up=function(ans){

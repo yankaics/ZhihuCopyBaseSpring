@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Repository
 public class AnswerDao {
+
 	@Autowired
 	private JdbcOperations jdbcOperations;
 	@Autowired
@@ -36,6 +37,20 @@ public class AnswerDao {
 
 	private final String UPDATE_UPVOTE_PLUS_ONE = "UPDATE answer SET upvote_number = upvote_number+1 where ans_id=?";
 	private final String UPDATE_UPVOTE_CUT_ONE = "UPDATE answer SET upvote_number = upvote_number-1 where ans_id=?";
+
+	private final String ADD_NEW_ANSWER = "insert into answer (user_id,ques_id,ans_content) values (?,?,?)";
+
+	private final String SELECT_LAST_INSERT_ANSWER = "select * from answer where ans_id = last_insert_id()";
+
+	public Answer addNewAnswer(Answer answer){
+		jdbcOperations.update(ADD_NEW_ANSWER,
+				answer.getUserID(),
+				answer.getQuesID(),
+				answer.getAnsContent());
+		return jdbcOperations.queryForObject(SELECT_LAST_INSERT_ANSWER,
+				new AnswerRowMapper());
+	}
+
 
 	public Answer findAnswersByAnsID(long ansID){
 		try{

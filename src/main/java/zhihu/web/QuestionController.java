@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import zhihu.dao.AnswerDao;
 import zhihu.dao.QuestionDao;
 import zhihu.dao.UpvoteDao;
-import zhihu.domain.*;
+import zhihu.domain.Answer;
+import zhihu.domain.Question;
+import zhihu.domain.Upvote;
+import zhihu.domain.User;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -67,5 +70,15 @@ public class QuestionController {
 
 		upvoteDao.updateRecordForUpvote(upvote);
 		return "success";
+	}
+
+
+	@RequestMapping(value = "/{ques_id}/answerQuestion",method = RequestMethod.POST)
+	@ResponseBody
+	public Answer answerQuestion(@PathVariable long ques_id, HttpSession session,@RequestBody Answer answer){
+		User user = (User) session.getAttribute("user");
+		answer.setQuesID(ques_id);
+		answer.setUserID(user.getUserID());
+		return answerDao.addNewAnswer(answer);
 	}
 }

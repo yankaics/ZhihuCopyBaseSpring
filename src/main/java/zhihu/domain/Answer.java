@@ -13,6 +13,10 @@ public class Answer {
 	private User user;
 	private Upvote upvote;
 
+	public Answer(){
+
+	}
+
 	public Answer(long ansID, long userID,long quesID,String ansContent,int upvoteNumber) {
 		this.ansID = ansID;
 		this.userID = userID;

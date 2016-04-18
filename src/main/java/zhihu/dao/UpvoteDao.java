@@ -24,6 +24,10 @@ public class UpvoteDao {
 
 	private final String UPDATE_RECORD = "UPDATE upvote SET up = ?, down = ? where upvote_id = ?";
 
+	private final String ADD_NEW_UPVOTE_RECORD = "insert into upvote (user_id,ans_id) values (?,?)";
+
+	private final String SELECT_LAST_INSERT_UPVOTE = "select * from upvote where upvote_id = last_insert_id()";
+
 	public Upvote queryIsUpvoteByAnsIdAndUserId(long ansID,long userID){
 		try {
 			Upvote upvote = jdbcOperations.queryForObject(
@@ -35,11 +39,16 @@ public class UpvoteDao {
 			return upvote;
 		}
 		catch (EmptyResultDataAccessException e){
-			return null;
+
+			return addNewUpvoteRecord(ansID,userID);
 		}
 
 	}
 
+	public Upvote addNewUpvoteRecord(long ansID,long userID){
+		jdbcOperations.update(ADD_NEW_UPVOTE_RECORD,userID,ansID);
+		return jdbcOperations.queryForObject(SELECT_LAST_INSERT_UPVOTE,new UpvoteRowMapper());
+	}
 
 	public void updateRecordForUpvote(Upvote upvote){
 		jdbcOperations.update(UPDATE_RECORD,upvote.isUp(),upvote.isDown(),upvote.getUpvoteID());
