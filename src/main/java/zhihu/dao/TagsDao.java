@@ -20,7 +20,8 @@ public class TagsDao {
 	@Autowired
 	JdbcOperations jdbcOperations;
 	private final String QUERY_TAGS_BY_QUES_ID = "select * from tags where ques_id = ?";
-
+	private final String ADD_NEW_TAGS = "insert into tags (ques_id,tag1) values (?,?)";
+	private final String SELECT_LAST_INSERT_ANSWER = "select * from tags where tags_id = last_insert_id()";
 
 	public Tags findTagsByQuesID(long ques_id){
 		try{
@@ -34,6 +35,11 @@ public class TagsDao {
 		catch (EmptyResultDataAccessException e){
 			return null;
 		}
+	}
+
+	public Tags addNewTags(long ques_id, String tagString) {
+		jdbcOperations.update(ADD_NEW_TAGS,ques_id,tagString);
+		return jdbcOperations.queryForObject(SELECT_LAST_INSERT_ANSWER,new TagsRowMapper());
 	}
 
 	private class TagsRowMapper implements RowMapper<Tags> {

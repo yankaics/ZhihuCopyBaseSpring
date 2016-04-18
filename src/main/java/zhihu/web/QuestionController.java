@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import zhihu.dao.AnswerDao;
 import zhihu.dao.QuestionDao;
 import zhihu.dao.UpvoteDao;
-import zhihu.domain.Answer;
-import zhihu.domain.Question;
-import zhihu.domain.Upvote;
-import zhihu.domain.User;
+import zhihu.domain.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -80,5 +77,14 @@ public class QuestionController {
 		answer.setQuesID(ques_id);
 		answer.setUserID(user.getUserID());
 		return answerDao.addNewAnswer(answer);
+	}
+
+	@RequestMapping(value = "/ask",method = RequestMethod.POST)
+	public String askQuestion(HttpSession session, QuestionForm questionForm){
+		User user = (User) session.getAttribute("user");
+		Question question = new Question(user.getUserID(),questionForm.getQuesTitle(),questionForm.getQuesContent());
+		String tagString=questionForm.getTag();
+		Question newQuestion = questionDao.addNewQuestion(question,tagString);
+		return "redirect:/question/"+newQuestion.getQuesID();
 	}
 }

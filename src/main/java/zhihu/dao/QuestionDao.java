@@ -25,7 +25,20 @@ public class QuestionDao {
 
 	private final String FIND_QUESTION_BY_QUE_ID = "select * from question where ques_id = ?";
 
-	public String QUERY_QUESTION_BY_USER_ID ="select * from question where user_id=? limit 10";
+	private String QUERY_QUESTION_BY_USER_ID ="select * from question where user_id=? limit 10";
+
+	private String ADD_NEW_QUESTION = "insert into question (ques_title,ques_content,user_id) values (?,?,?)";
+
+	private final String SELECT_LAST_INSERT_QUESTION = "select * from question where ques_id = last_insert_id()";
+
+	public Question addNewQuestion(Question question,String tagString){
+		jdbcOperations.update(ADD_NEW_QUESTION,
+				question.getQuesTitle(),
+				question.getQuesContent(),
+				question.getUserID());
+		return jdbcOperations.queryForObject(SELECT_LAST_INSERT_QUESTION,
+				new QuestionRowMapper(tagString));
+	}
 
 	public Question findOneQuestionByQueId(long quesID){
 		try {
@@ -54,10 +67,19 @@ public class QuestionDao {
 	}
 
 	private class QuestionRowMapper implements RowMapper<Question> {
+		private String tagString;
 
+		public QuestionRowMapper(){
+
+		}
+		public QuestionRowMapper(String tagString){
+			this.tagString = tagString;
+		}
 		public Question mapRow(ResultSet rs, int rowNum) throws SQLException {
 
 			Tags tags = tagsDao.findTagsByQuesID(rs.getLong("ques_id"));
+			if(tags==null)
+				tags=tagsDao.addNewTags(rs.getLong("ques_id"),tagString);
 
 			return new Question(
 					rs.getLong("ques_id"),

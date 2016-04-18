@@ -13,6 +13,12 @@ public class Question {
 
 	public Question() {
 	}
+	public Question(long userID,String quesTitle, String quesContent) {
+
+		this.userID = userID;
+		this.quesTitle = quesTitle;
+		this.quesContent = quesContent;
+	}
 
 	public Question(long quesID, long userID, long views,String quesTitle, String quesContent) {
 		this.quesID = quesID;
