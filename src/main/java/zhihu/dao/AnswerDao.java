@@ -85,6 +85,7 @@ public class AnswerDao {
 		}
 	}
 
+
 	public List<Answer> findAnswersByQuesID(long quesID,long current_user_id){
 		try{
 			List<Answer> queryAnswers = jdbcOperations.query(

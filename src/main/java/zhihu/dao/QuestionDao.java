@@ -1,6 +1,8 @@
 package zhihu.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
@@ -27,6 +29,7 @@ public class QuestionDao {
 
 	private final String SELECT_LAST_INSERT_QUESTION = "select * from question where ques_id = last_insert_id()";
 
+	@CachePut(value = "questionCache",key = "#result.quesID")
 	public Question addNewQuestion(long userID, String quesTitle, String quesContent, String tags){
 		jdbcOperations.update(ADD_NEW_QUESTION,
 				quesTitle,
@@ -37,6 +40,7 @@ public class QuestionDao {
 				new QuestionRowMapper());
 	}
 
+	@Cacheable(value = "questionCache",key = "#quesID")
 	public Question findOneQuestionByQueId(long quesID){
 		try {
 			Question question = jdbcOperations.queryForObject(

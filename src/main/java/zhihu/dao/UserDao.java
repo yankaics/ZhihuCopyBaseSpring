@@ -1,6 +1,8 @@
 package zhihu.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
@@ -26,13 +28,14 @@ public class UserDao {
 	private static final String QUERY_USER_BY_USERNAME = "select * from user where username=?";
 	private static final String QUERY_USER_BY_USER_ID = "select * from user where user_id=?";
 
-
+	@CachePut(value = "userCache",key = "#result.userID")
 	public User registerNewUser(User user){
 		jdbcOperations.update(INSERT_USER,
 				user.getUsername(),
 				new MD5Util().encode(user.getPassword()));
 		return findUserByUserName(user.getUsername());
 	}
+
 
 	public User findUserByUserName(String username){
 		try {
@@ -47,7 +50,7 @@ public class UserDao {
 		}
 
 	}
-
+	@Cacheable(value = "userCache")
 	public User findUserByUserID(long user_id){
 		try {
 			User queryUser = jdbcOperations.queryForObject(
