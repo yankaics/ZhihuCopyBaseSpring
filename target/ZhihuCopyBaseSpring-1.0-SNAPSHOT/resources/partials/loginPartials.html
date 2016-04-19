@@ -1,0 +1,22 @@
+<form class="form-horizontal" ng-controller="loginCtrl" action="/login" method="post"
+      xmlns:th="http://www.thymeleaf.org">
+    <h1 th:text="hello"></h1>
+    <div class="form-group input-login">
+        <label  class="control-label sr-only">Email</label>
+        <div class="col-md-12">
+            <input type="text" class="form-control" ng-model="user.username" name="username" placeholder="NickName"/>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </div>
+    </div>
+    <div class="form-group input-login">
+        <label  class="control-label sr-only">Password</label>
+        <div class="col-md-12">
+            <input type="password" class="form-control" ng-model="user.password" name="password" placeholder="Password"/>
+        </div>
+    </div>
+    <div class="form-group sub-login">
+        <div class=" col-md-12">
+            <button name="submit" type="submit" class="btn btn-primary btn-login">Login</button>
+        </div>
+    </div>
+</form>

@@ -36,16 +36,28 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 	@Bean
-	public SpringTemplateEngine templateEngine(TemplateResolver templateResolver) {
+	public SpringTemplateEngine templateEngine() {
 		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-		templateEngine.setTemplateResolver(templateResolver);
+		templateEngine.addTemplateResolver(mainResolver());
+		templateEngine.addTemplateResolver(partialsResolver());
 		return templateEngine;
 	}
 
 	@Bean
-	public TemplateResolver templateResolver() {
+	public TemplateResolver mainResolver() {
 		TemplateResolver templateResolver = new ServletContextTemplateResolver();
 		templateResolver.setPrefix("/WEB-INF/views/");
+		templateResolver.setSuffix(".html");
+		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setCharacterEncoding("utf-8");
+		templateResolver.setCacheable(false);
+		return templateResolver;
+	}
+
+	@Bean
+	public TemplateResolver partialsResolver() {
+		TemplateResolver templateResolver = new ServletContextTemplateResolver();
+		templateResolver.setPrefix("/resources/partials/");
 		templateResolver.setSuffix(".html");
 		templateResolver.setTemplateMode("HTML5");
 		templateResolver.setCharacterEncoding("utf-8");

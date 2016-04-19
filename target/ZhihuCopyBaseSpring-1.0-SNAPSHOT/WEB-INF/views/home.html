@@ -36,7 +36,7 @@
                 <div class="panel-footer">
                     <ul class="nav nav-pills">
                         <li role="presentation"  ng-class="{active : activeMenu === 'Home'}"  ng-click="activeMenu = 'Home'">
-                            <a href="#/ans" >Home</a>
+                            <a href="#/home" >Home</a>
                         </li>
                         <li role="presentation"  ng-class="{active : activeMenu === 'Ans'}" ng-click="activeMenu = 'Ans'">
                             <a href="#/ans" >回答</a>
@@ -60,15 +60,15 @@
             .config(['$routeProvider',
             function ($routeProvider) {
                 $routeProvider.when('/', {
-                    templateUrl: '/resources/partials/ans.html',
+                    templateUrl: '/resources/partials/ansPartials.html',
                     controller:"ansCtrl",
                     activeMenu: "Home"
                 }).when('/ans', {
-                    templateUrl: '/resources/partials/ans.html',
+                    templateUrl: '/resources/partials/ansPartials.html',
                     controller:"ansCtrl",
                     activeMenu: "Ans"
                 }).when('/que', {
-                    templateUrl: '/resources/partials/que.html',
+                    templateUrl: '/resources/partials/quePartials.html',
                     controller:"queCtrl",
                     activeMenu: "Que"
                 }).otherwise({

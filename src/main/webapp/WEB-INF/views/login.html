@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>知乎登陆</title>
     <link rel='stylesheet' href='/resources/stylesheets/bootstrap.min.css' />
@@ -13,7 +13,6 @@
             <div class="index-header">
                 <h1 class="logo">知乎</h1>
                 <h4 class="subtitle" >与世界分享你的知识、经验和见解</h4>
-
             </div>
             <div class="index-tabnavs">
                 <div class="nav-slider">
@@ -35,11 +34,11 @@
                 .config(['$routeProvider',
                     function ($routeProvider) {
                         $routeProvider.when('/', {
-                            templateUrl: '/resources/partials/sign.html'
+                            templateUrl: '/resources/partials/signPartials.html'
                         }).when('/signup',{
-                            templateUrl: '/resources/partials/sign.html'
+                            templateUrl: '/resources/partials/signPartials.html'
                         }).when('/signin',{
-                            templateUrl: '/resources/partials/login.html'
+                            templateUrl: '/resources/partials/loginPartials.html'
                         });
                     }]);
                 //定义Service
@@ -100,11 +99,17 @@
                 }
             });
 
-            app.controller("loginCtrl",function($scope,$http,$window){
+            app.controller("loginCtrl",function($scope,$http,$window,$location){
                 $scope.user ={
                     "username" : "",
                     "password" : ""
                 };
+//                if($location.search('error')){
+//                    $scope.error = $location.search()['error'];
+//                }
+//                if($location.search().logout){
+//                    $scope.error = $location.search()['logout'];
+//                }
                 $scope.login=function(){
                     $http(
                             {

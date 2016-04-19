@@ -30,7 +30,7 @@ public class UserDao {
 	public User registerNewUser(User user){
 		jdbcOperations.update(INSERT_USER,
 				user.getUsername(),
-				MD5Util.MD5(user.getPassword()));
+				new MD5Util().encode(user.getPassword()));
 		return findUserByUserName(user.getUsername());
 	}
 
