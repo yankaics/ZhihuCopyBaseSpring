@@ -31,10 +31,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				.antMatchers("/", "/index").access("hasRole('USER')")
-				.and().formLogin().loginPage("/login").successHandler(new LoginSuccessHandler())
-				.usernameParameter("username").passwordParameter("password")
-				.and().exceptionHandling().accessDeniedPage("/Access_Denied")
-				.and().csrf().disable();
+				.and()
+					.formLogin()
+					.loginPage("/login")
+					.failureUrl("/login#/signin?error=1")
+					.successHandler(new LoginSuccessHandler())
+					.usernameParameter("username").passwordParameter("password")
+				.and()
+					.logout()
+					.logoutUrl("/logout")
+					.logoutSuccessUrl("/login#/signin?logout=1")
+				.and()
+					.exceptionHandling().accessDeniedPage("/Access_Denied")
+				.and()
+					.csrf().disable();
 
 	}
 }

@@ -22,10 +22,13 @@ public class AnswerDao {
 
 	@Autowired
 	private JdbcOperations jdbcOperations;
+
 	@Autowired
 	private QuestionDao questionDao;
+
 	@Autowired
 	private UserDao userDao;
+
 	@Autowired
 	private UpvoteDao upvoteDao;
 

@@ -1,11 +1,15 @@
-<form class="form-horizontal" ng-controller="loginCtrl" action="/login" method="post"
-      xmlns:th="http://www.thymeleaf.org">
-    <h1 th:text="hello"></h1>
+<form class="form-horizontal" ng-controller="loginCtrl" action="/login" method="post">
     <div class="form-group input-login">
+        <div ng-if="message.error" class="alert alert-danger">
+            <p>Invalid username and password.</p>
+        </div>
+
+        <div ng-if="message.logout" class="alert alert-success">
+            <p>You have been logged out successfully.</p>
+        </div>
         <label  class="control-label sr-only">Email</label>
         <div class="col-md-12">
             <input type="text" class="form-control" ng-model="user.username" name="username" placeholder="NickName"/>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </div>
     </div>
     <div class="form-group input-login">
