@@ -19,3 +19,57 @@ html, body {
 .left-content{
     padding-left: 0px;
 }
+.content{
+    margin-top: 10px;
+    padding-left: 40px;
+    padding-right: 20px;
+    border-bottom: 2px solid #eee;
+}
+.content-title{
+    color: #259;
+    font-weight:bold;
+    margin-bottom: 5px;
+}
+.content-writer{
+    margin-bottom: 5px;
+}
+
+.up-and-down{
+    position: absolute;
+    left: 0px;
+    top:38px;
+}
+.hover-block{
+    background-color: #eff6fa;
+    border-radius: 5px;
+    color: #698ebf;
+}
+.hover-block:hover{
+    background-color: #698dbe;
+    color: white;
+}
+.up{
+    width: 32px;
+    padding-right: 12px;
+    padding-left: 10px;
+    padding-bottom: 5px
+}
+.up-cont{
+    margin-top: -3px;
+    margin-bottom: 3px;
+    padding: 0px 0px 2px 0px;
+    text-align: center;
+}
+.down{
+    margin-top: 5px;
+    width: 32px;
+    background-color: #eff6fa;
+    color: #698ebf;
+    padding-right: 12px;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+.down:hover{
+    background-color: #698dbe;
+    color: white;
+}

@@ -13,6 +13,4 @@ angular.module('home')
         $scope.$on("$routeChangeSuccess", function(event, current, previous){
             $scope.activeMenu = current.$$route.activeMenu;
         });
-        // console.log($route.current.$$route.activeMenu);
-        // $scope.activeMenu=$route.current.$$route.activeMenu;
 });

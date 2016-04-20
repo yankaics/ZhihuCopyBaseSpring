@@ -21,7 +21,9 @@
                 </div>
             </div>
             <div class="view-sign">
-                <div ng-view=""></div>
+                <div ng-view="">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </div>
             </div>
         </div>
     </div>

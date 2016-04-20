@@ -3,7 +3,6 @@
         <div ng-if="message.error" class="alert alert-danger">
             <p>Invalid username and password.</p>
         </div>
-
         <div ng-if="message.logout" class="alert alert-success">
             <p>You have been logged out successfully.</p>
         </div>
@@ -18,6 +17,7 @@
             <input type="password" class="form-control" ng-model="user.password" name="password" placeholder="Password"/>
         </div>
     </div>
+    <input name="_csrf" type="hidden" value="6829b1ae-0a14-4920-aac4-5abbd7eeb9ee" />
     <div class="form-group sub-login">
         <div class=" col-md-12">
             <button name="submit" type="submit" class="btn btn-primary btn-login">Login</button>

@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(DataConfig.class)
-@ComponentScan(basePackages = {"zhihu.config","zhihu.dao","zhihu.security"})
+@ComponentScan(basePackages = {"zhihu.config","zhihu.dao","zhihu.security","zhihu.service"})
 public class RootConfig {
 }
