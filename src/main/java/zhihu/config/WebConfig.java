@@ -17,6 +17,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -74,6 +75,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public MappingJackson2HttpMessageConverter jsonConverter() {
 		MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
 		ObjectMapper objectMapper = new ObjectMapper();
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		objectMapper.setDateFormat(fmt);
 		jsonConverter.setObjectMapper(objectMapper);
 		return jsonConverter;
 	}

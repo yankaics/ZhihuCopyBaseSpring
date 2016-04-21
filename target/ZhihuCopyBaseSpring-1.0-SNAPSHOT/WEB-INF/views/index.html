@@ -21,22 +21,18 @@
                         <span class="glyphicon glyphicon-th-list"></span>
                         <span class="h4">最新动态</span>
                     </div>
-                    <div class="content">
-                        <div class="content-title"><a href="#">日本地震，题主所用的浏览器上的新闻网站上的评论大部分一片叫好声，你怎么看？</a></div>
-                        <div class="content-writer"><strong>黄兔子</strong></div>
-                        <div class="content-main"><p>同样还是这群人跟我说，中国人没信仰！
-                            日本很多人也信上帝了，主会原谅世人的罪恶，包容一切。只要相信主，就可以上天堂。
-                            日本很多人仍旧信仰佛教，佛法慈悲，早登极乐。
-                            日本更多的人信仰神道教，天照大神，会保佑他们。</p>
-                        </div>
+                    <div class="content" ng-repeat="answer in answers">
+                        <div class="content-title"><a href="/question/{{answer.question.quesID}}">{{answer.question.quesTitle}}</a></div>
+                        <div class="content-writer"><strong>{{answer.user.username}}</strong></div>
+                        <div class="content-main"><p>{{answer.ansContent}}</p></div>
                         <div class="up-and-down" >
-                            <div class="hover-block" ng-class="{'active': ans.upvote.up}" style="cursor:pointer" ng-click="up(ans);">
+                            <div class="hover-block" ng-class="{'active': answer.upvote.up}" style="cursor:pointer" ng-click="up(answer);">
                                 <div class="up" >
                                     <span class="glyphicon glyphicon-triangle-top"/>
                                 </div>
-                                <div class="h5 up-cont">{{ans.upvoteNumber}}12</div>
+                                <div class="h5 up-cont">{{answer.upvoteNumber}}</div>
                             </div>
-                            <div class="down" ng-class="{'active': ans.upvote.down}" ng-click="down(ans);" style="cursor:pointer">
+                            <div class="down" ng-class="{'active': answer.upvote.down}" ng-click="down(answer);" style="cursor:pointer">
                                 <span class="glyphicon glyphicon-triangle-bottom"  />
                             </div>
                         </div>

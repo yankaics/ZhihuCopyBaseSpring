@@ -32,7 +32,7 @@ public class AnswerDao {
 	@Autowired
 	private UpvoteDao upvoteDao;
 
-	private final String QUERY_ANSWER_BY_USER_ID ="select * from answer where user_id=? limit 10";
+	private final String QUERY_ANSWER_BY_USER_ID ="select * from answer where user_id=? ORDER BY create_at desc limit 20";
 
 	private final  String QUERY_ANSWER_BY_QUES_ID ="select * from answer where ques_id=? limit 10";
 
@@ -41,9 +41,23 @@ public class AnswerDao {
 	private final String UPDATE_UPVOTE_PLUS_ONE = "UPDATE answer SET upvote_number = upvote_number+1 where ans_id=?";
 	private final String UPDATE_UPVOTE_CUT_ONE = "UPDATE answer SET upvote_number = upvote_number-1 where ans_id=?";
 
-	private final String ADD_NEW_ANSWER = "insert into answer (user_id,ques_id,ans_content) values (?,?,?)";
+	private final String ADD_NEW_ANSWER = "insert into answer (user_id,ques_id,ans_content,create_at) values (?,?,?,NOW())";
 
 	private final String SELECT_LAST_INSERT_ANSWER = "select * from answer where ans_id = last_insert_id()";
+
+	private final String SELECT_LATEST_ANSWERS = "select * from answer ORDER BY create_at desc ";
+
+	public List<Answer> findLatestAnswers(long currentUserId) {
+		try{
+			List<Answer> queryAnswers = jdbcOperations.query(
+					SELECT_LATEST_ANSWERS,
+					new AnswerDao.AnswerRowMapper(currentUserId));
+			return queryAnswers;
+		}
+		catch (EmptyResultDataAccessException e){
+			return null;
+		}
+	}
 
 	public Answer addNewAnswer(Answer answer){
 		jdbcOperations.update(ADD_NEW_ANSWER,
@@ -79,7 +93,7 @@ public class AnswerDao {
 		try{
 			List<Answer> queryAnswers = jdbcOperations.query(
 					QUERY_ANSWER_BY_USER_ID,
-					new AnswerDao.AnswerRowMapper(),
+					new AnswerDao.AnswerRowMapper(userID),
 					userID);
 			return queryAnswers;
 		}
@@ -126,7 +140,8 @@ public class AnswerDao {
 								rs.getString("ans_content"),
 								rs.getInt("upvote_number"),
 								question,
-								user);
+								user,
+								rs.getTimestamp("create_at"));
 
 			answer.setUpvote(upvote);
 

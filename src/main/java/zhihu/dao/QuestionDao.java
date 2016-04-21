@@ -25,7 +25,7 @@ public class QuestionDao {
 
 	private String QUERY_QUESTION_BY_USER_ID ="select * from question where user_id=? limit 10";
 
-	private String ADD_NEW_QUESTION = "insert into question (ques_title,ques_content,user_id,tags) values (?,?,?,?)";
+	private String ADD_NEW_QUESTION = "insert into question (ques_title,ques_content,user_id,tags,create_at) values (?,?,?,?,NOW())";
 
 	private final String SELECT_LAST_INSERT_QUESTION = "select * from question where ques_id = last_insert_id()";
 
@@ -77,7 +77,8 @@ public class QuestionDao {
 					rs.getLong("views"),
 					rs.getString("ques_title"),
 					rs.getString("ques_content"),
-					rs.getString("tags").split(","));
+					rs.getString("tags").split(","),
+					rs.getTimestamp("create_at"));
 		}
 	}
 }

@@ -24,6 +24,7 @@ html, body {
     padding-left: 40px;
     padding-right: 20px;
     border-bottom: 2px solid #eee;
+    position: relative;
 }
 .content-title{
     color: #259;
@@ -37,7 +38,7 @@ html, body {
 .up-and-down{
     position: absolute;
     left: 0px;
-    top:38px;
+    top:2px;
 }
 .hover-block{
     background-color: #eff6fa;
@@ -70,6 +71,10 @@ html, body {
     border-radius: 5px;
 }
 .down:hover{
+    background-color: #698dbe;
+    color: white;
+}
+.active {
     background-color: #698dbe;
     color: white;
 }

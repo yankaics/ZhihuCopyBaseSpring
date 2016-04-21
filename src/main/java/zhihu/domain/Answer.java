@@ -1,5 +1,7 @@
 package zhihu.domain;
 
+import java.sql.Timestamp;
+
 /**
  * Created by ZJ on 2016/4/13.
  */
@@ -12,6 +14,7 @@ public class Answer {
 	private Question question;
 	private User user;
 	private Upvote upvote;
+	private Timestamp createAt;
 
 	public Answer(){
 
@@ -25,7 +28,7 @@ public class Answer {
 		this.upvoteNumber = upvoteNumber;
 	}
 
-	public Answer(long ansID, long userID, long quesID, String ansContent, int upvoteNumber, Question question, User user) {
+	public Answer(long ansID, long userID, long quesID, String ansContent, int upvoteNumber, Question question, User user, Timestamp createAt) {
 		this.ansID = ansID;
 		this.userID = userID;
 		this.quesID = quesID;
@@ -33,6 +36,7 @@ public class Answer {
 		this.upvoteNumber = upvoteNumber;
 		this.question = question;
 		this.user = user;
+		this.createAt = createAt;
 	}
 
 
@@ -99,5 +103,13 @@ public class Answer {
 
 	public void setUpvote(Upvote upvote) {
 		this.upvote = upvote;
+	}
+
+	public Timestamp getCreateAt() {
+		return createAt;
+	}
+
+	public void setCreateAt(Timestamp createAt) {
+		this.createAt = createAt;
 	}
 }
