@@ -5,10 +5,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import zhihu.domain.Answer;
-import zhihu.domain.Question;
-import zhihu.domain.Upvote;
-import zhihu.domain.User;
+import zhihu.model.Answer;
+import zhihu.model.Question;
+import zhihu.model.Upvote;
+import zhihu.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by ZJ on 2016/4/14.
  */
 @Repository
-public class AnswerDao {
+public class AnswerDao{
 
 	@Autowired
 	private JdbcOperations jdbcOperations;

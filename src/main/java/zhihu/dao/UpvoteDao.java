@@ -5,7 +5,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import zhihu.domain.Upvote;
+import zhihu.model.Upvote;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

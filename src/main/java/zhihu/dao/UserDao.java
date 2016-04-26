@@ -7,7 +7,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import zhihu.domain.User;
+import zhihu.model.User;
 import zhihu.util.MD5Util;
 
 import java.sql.ResultSet;

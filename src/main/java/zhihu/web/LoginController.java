@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import zhihu.dao.UserDao;
-import zhihu.domain.User;
+import zhihu.model.User;
 import zhihu.security.CustomUserDetail;
 import zhihu.service.UserService;
 

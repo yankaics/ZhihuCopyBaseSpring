@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import zhihu.dao.AnswerDao;
 import zhihu.dao.QuestionDao;
-import zhihu.domain.Answer;
+import zhihu.dao.UserTestDao;
+import zhihu.model.Answer;
+import zhihu.model.User;
 import zhihu.security.CustomUserDetail;
-import zhihu.domain.Question;
+import zhihu.model.Question;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -49,5 +51,17 @@ public class HomeController {
 		return questions;
 	}
 
+
+	@Autowired
+	UserTestDao userTestDao;
+
+	@RequestMapping(value = "/test")
+	public String test(){
+		User test = new User();
+		test.setUsername("test");
+		test.setPassword("123456");
+		userTestDao.addUser(test);
+		return "test";
+	}
 
 }

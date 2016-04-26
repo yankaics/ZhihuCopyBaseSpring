@@ -1,5 +1,6 @@
 package zhihu.web;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,7 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import zhihu.dao.AnswerDao;
 import zhihu.dao.QuestionDao;
 import zhihu.dao.UpvoteDao;
-import zhihu.domain.*;
+import zhihu.model.Answer;
+import zhihu.model.Question;
+import zhihu.model.QuestionForm;
+import zhihu.model.Upvote;
 import zhihu.security.CustomUserDetail;
 
 import javax.servlet.http.HttpSession;
@@ -28,6 +32,8 @@ public class QuestionController {
 
 	@Autowired
 	UpvoteDao upvoteDao;
+
+	private static final Logger logger = Logger.getLogger(QuestionController.class);
 
 	@RequestMapping("/{ques_id}")
 	public String question(@PathVariable long ques_id, Model model){
@@ -75,6 +81,7 @@ public class QuestionController {
 	@ResponseBody
 	public Answer answerQuestion(@PathVariable long ques_id, HttpSession session,@RequestBody Answer answer){
 		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
+		logger.debug(answer.getAnsContent());
 		answer.setQuesID(ques_id);
 		answer.setUserID(user.getUserID());
 		return answerDao.addNewAnswer(answer);

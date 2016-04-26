@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import zhihu.dao.UserDao;
-import zhihu.domain.User;
+import zhihu.model.User;
 import zhihu.security.CustomUserDetail;
 
 import java.util.Collections;

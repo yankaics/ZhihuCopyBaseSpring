@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import zhihu.dao.AnswerDao;
-import zhihu.domain.Answer;
+import zhihu.model.Answer;
 import zhihu.security.CustomUserDetail;
 
 import javax.servlet.http.HttpSession;
