@@ -8,16 +8,15 @@
         </div>
         <label  class="control-label sr-only">Email</label>
         <div class="col-md-12">
-            <input type="text" class="form-control" ng-model="user.username" name="username" placeholder="NickName"/>
+            <input type="text" class="form-control" ng-model="credentials.username" name="username" placeholder="NickName"/>
         </div>
     </div>
     <div class="form-group input-login">
         <label  class="control-label sr-only">Password</label>
         <div class="col-md-12">
-            <input type="password" class="form-control" ng-model="user.password" name="password" placeholder="Password"/>
+            <input type="password" class="form-control" ng-model="credentials.password" name="password" placeholder="Password"/>
         </div>
     </div>
-    <input name="_csrf" type="hidden" value="6829b1ae-0a14-4920-aac4-5abbd7eeb9ee" />
     <div class="form-group sub-login">
         <div class=" col-md-12">
             <button name="submit" type="submit" class="btn btn-primary btn-login">Login</button>

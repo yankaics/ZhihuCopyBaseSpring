@@ -2,6 +2,7 @@ package zhihu.config;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import zhihu.web.WebConfig;
 
 import javax.servlet.Filter;
 

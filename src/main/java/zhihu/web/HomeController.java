@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import zhihu.dao.AnswerDao;
 import zhihu.dao.QuestionDao;
-import zhihu.dao.UserTestDao;
 import zhihu.model.Answer;
+import zhihu.model.Question;
 import zhihu.model.User;
 import zhihu.security.CustomUserDetail;
-import zhihu.model.Question;
+import zhihu.service.UserTestService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -53,7 +53,7 @@ public class HomeController {
 
 
 	@Autowired
-	UserTestDao userTestDao;
+	UserTestService userTestDao;
 
 	@RequestMapping(value = "/test")
 	public String test(){

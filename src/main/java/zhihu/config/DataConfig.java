@@ -11,7 +11,7 @@ import javax.sql.DataSource;
  * Created by ZJ on 2016/4/13.
  */
 @Configuration
-public class DataConfig {
+public class DataConfig  {
 
 	@Bean
 	public DataSource dataSource(){
@@ -25,4 +25,6 @@ public class DataConfig {
 	public JdbcTemplate jdbcTemplate(DataSource dataSource){
 		return new JdbcTemplate(dataSource);
 	}
+
+
 }

@@ -1,6 +1,6 @@
-package zhihu.dao;
+package zhihu.service;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zhihu.model.User;
 
@@ -11,9 +11,10 @@ import javax.persistence.PersistenceUnit;
 /**
  * Created by ZJ on 2016/4/26.
  */
-@Repository
+
+@Service
 @Transactional
-public class UserTestDao {
+public class UserTestService {
 
 	@PersistenceUnit
 	private EntityManagerFactory entityManagerFactory;

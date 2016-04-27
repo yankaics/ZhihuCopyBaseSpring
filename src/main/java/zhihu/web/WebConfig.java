@@ -1,4 +1,4 @@
-package zhihu.config;
+package zhihu.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan({"zhihu.web"})
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebConfig extends WebMvcConfigurerAdapter{
 
 	@Bean
 	public ViewResolver viewResolver(SpringTemplateEngine templateEngine) {
@@ -91,4 +91,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		configurer.defaultContentType(MediaType.APPLICATION_JSON);
 	}
+
+
+
 }
