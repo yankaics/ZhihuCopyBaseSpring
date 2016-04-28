@@ -2,9 +2,9 @@ package zhihu.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import zhihu.dao.AnswerDao;
 import zhihu.model.Answer;
 import zhihu.security.CustomUserDetail;
@@ -23,17 +23,20 @@ public class IndexController {
 	AnswerDao answerDao;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String index(HttpSession session){
+	public String index(HttpSession session, Model model){
+		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
+		List<Answer> answers = answerDao.findLatestAnswers(user.getUserID());
+		model.addAttribute(answers);
 		return "index";
 	}
 
 
-	@RequestMapping(value = "/latestAnswers",method = RequestMethod.GET)
-	@ResponseBody
-	public List<Answer> getLatestAnswers(HttpSession session){
-		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
-		List<Answer> answers = answerDao.findLatestAnswers(user.getUserID());
-		return answers;
-	}
+//	@RequestMapping(value = "/latestAnswers",method = RequestMethod.GET)
+//	@ResponseBody
+//	public List<Answer> getLatestAnswers(HttpSession session){
+//		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
+//		List<Answer> answers = answerDao.findLatestAnswers(user.getUserID());
+//		return answers;
+//	}
 
 }

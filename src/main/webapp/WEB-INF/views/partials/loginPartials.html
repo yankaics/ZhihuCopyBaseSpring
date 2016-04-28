@@ -1,23 +1,23 @@
-<form class="form-horizontal" ng-controller="loginCtrl" action="/login" method="post">
-    <div class="form-group input-login">
-        <div ng-if="message.error" class="alert alert-danger">
+<form th:fragment="loginPartial" class="form-horizontal" ng-controller="loginCtrl" action="/login" method="post" xmlns:th="http://www.thymeleaf.org">
+    <div class="form-group input-login row" >
+        <div ng-if="message.error" class="alert alert-danger row">
             <p>Invalid username and password.</p>
         </div>
-        <div ng-if="message.logout" class="alert alert-success">
+        <div ng-if="message.logout" class="alert alert-success row">
             <p>You have been logged out successfully.</p>
         </div>
-        <label  class="control-label sr-only">Email</label>
+        <label class="control-label sr-only">Email</label>
         <div class="col-md-12">
             <input type="text" class="form-control" ng-model="credentials.username" name="username" placeholder="NickName"/>
         </div>
     </div>
-    <div class="form-group input-login">
+    <div class="form-group input-login row">
         <label  class="control-label sr-only">Password</label>
         <div class="col-md-12">
             <input type="password" class="form-control" ng-model="credentials.password" name="password" placeholder="Password"/>
         </div>
     </div>
-    <div class="form-group sub-login">
+    <div class="form-group sub-login row">
         <div class=" col-md-12">
             <button name="submit" type="submit" class="btn btn-primary btn-login">Login</button>
         </div>

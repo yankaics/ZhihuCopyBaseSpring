@@ -1,40 +1,16 @@
 
 
 angular.module("zhihu")
-    .controller("mainCtrl",function($scope,$http){
+    .controller("mainCtrl",function($scope,$http, $window){
         $scope.title="知乎";
-        $scope.answers={};
-        $http({
-                method: 'GET',
-                url: "/latestAnswers",
-            }
-        ).success(function (data) {
-            $scope.answers=data;
-            console.log(data);
-        }).error(function (data) {
-            alert("error");
-            alert(data);
-            console.log(data);
-        });
 
-
-        $scope.up=function(ans){
-            var upvote = ans.upvote;
+        $scope.up=function(ans_id){
             $http({
-                    method: 'POST',
-                    url: "/question/up",
-                    data: upvote
+                    method: 'get',
+                    url: "/answer/up?ans_id="+ans_id,
                 }
             ).success(function (data) {
-                upvote.up=!upvote.up;
-                if(upvote.up)
-                    ans.upvoteNumber++;
-                else
-                    ans.upvoteNumber--;
-
-                if(upvote.up && upvote.down){
-                    upvote.down = !upvote.down;
-                }
+                $window.location.href='/';
                 console.log(data);
             }).error(function (data) {
                 alert("error");
@@ -43,21 +19,13 @@ angular.module("zhihu")
             });
         };
 
-        $scope.down=function(ans){
-            var upvote = ans.upvote;
+        $scope.down=function(ans_id){
             $http({
-                    method: 'POST',
-                    url: "/question/down",
-                    data: upvote
+                    method: 'get',
+                    url: "/answer/down?ans_id="+ans_id,
                 }
             ).success(function (data) {
-                upvote.down = !upvote.down;
-
-                if(upvote.up && upvote.down){
-                    ans.upvoteNumber--;
-                    upvote.up = !upvote.up;
-                }
-                console.log(data);
+                $window.location.href='/';
             }).error(function (data) {
                 alert("error");
                 alert(data);

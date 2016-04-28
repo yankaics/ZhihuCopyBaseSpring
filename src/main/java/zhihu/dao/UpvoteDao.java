@@ -28,7 +28,8 @@ public class UpvoteDao {
 
 	private final String SELECT_LAST_INSERT_UPVOTE = "select * from upvote where upvote_id = last_insert_id()";
 
-	public Upvote queryIsUpvoteByAnsIdAndUserId(long ansID,long userID){
+
+	public Upvote queryUpvoteByAnsIdAndUserId(long ansID, long userID){
 		try {
 			Upvote upvote = jdbcOperations.queryForObject(
 					QUERY_UPVOTE,

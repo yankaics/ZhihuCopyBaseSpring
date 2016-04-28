@@ -11,7 +11,6 @@ import zhihu.dao.UpvoteDao;
 import zhihu.model.Answer;
 import zhihu.model.Question;
 import zhihu.model.QuestionForm;
-import zhihu.model.Upvote;
 import zhihu.security.CustomUserDetail;
 
 import javax.servlet.http.HttpSession;
@@ -50,31 +49,6 @@ public class QuestionController {
 		return answers;
 	}
 
-	@RequestMapping(value = "/up",method = RequestMethod.POST)
-	@ResponseBody
-	public String up(@RequestBody Upvote upvote){
-		upvote.setUp(!upvote.isUp());
-		if(upvote.isUp() && upvote.isDown()){
-			upvote.setDown(!upvote.isDown());
-		}
-
-		answerDao.updateUpNumber(upvote.getAnsID(),upvote);
-		upvoteDao.updateRecordForUpvote(upvote);
-		return "success";
-	}
-
-	@RequestMapping(value = "/down",method = RequestMethod.POST)
-	@ResponseBody
-	public String down(@RequestBody Upvote upvote){
-		upvote.setDown(!upvote.isDown());
-		if(upvote.isUp() && upvote.isDown()){
-			upvote.setUp(!upvote.isUp());
-			answerDao.updateUpNumber(upvote.getAnsID(),upvote);
-		}
-
-		upvoteDao.updateRecordForUpvote(upvote);
-		return "success";
-	}
 
 
 	@RequestMapping(value = "/{ques_id}/answerQuestion",method = RequestMethod.POST)

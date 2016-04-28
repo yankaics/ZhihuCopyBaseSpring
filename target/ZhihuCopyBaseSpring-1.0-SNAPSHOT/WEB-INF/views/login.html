@@ -20,11 +20,8 @@
                     <a href="#signin" ng-class="{active:Actived ==='login'}" ng-click="Actived = 'login'">登陆</a>
                 </div>
             </div>
-            <div class="view-sign">
-                <div ng-view="">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                </div>
-            </div>
+            <div ng-if="Actived ==='login'" class="view-sign" th:include="/partials/loginPartials:: loginPartial"></div>
+            <div ng-if="Actived ==='sign'" class="view-sign" th:include="/partials/signPartials:: signPartial"></div>
         </div>
     </div>
 
@@ -33,20 +30,7 @@
     <script type="text/javascript" src="/resources/javascripts/spring-security-csrf-token-interceptor.min.js"></script>
     <script type="text/javascript" th:inline="javascript">
         //<![CDATA[
-        var app=angular.module("login",['ngRoute'])
-                .config(function ($routeProvider,$httpProvider) {
-                        $routeProvider.when('/', {
-                            templateUrl: '/resources/partials/signPartials.html',
-                            Actived: "sign"
-                        }).when('/signup',{
-                            templateUrl: '/resources/partials/signPartials.html',
-                            Actived: "sign"
-                        }).when('/signin',{
-                            templateUrl: '/resources/partials/loginPartials.html',
-                            Actived: "login"
-                        });
-                        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-                    });
+        var app=angular.module("login");
                 //定义Service
             app.factory('data', function () {
 
@@ -61,10 +45,12 @@
                 };
             });
 
-            app.controller("appCtrl",function($scope){
-                $scope.$on("$routeChangeSuccess", function(event, current, previous){
-                    $scope.Actived = current.$$route.Actived;
-                });
+            app.controller("appCtrl",function($scope,$location){
+                //console.log($location.url());
+                if($location.url()!=='/signup')
+                    $scope.Actived = 'login';
+                else
+                    $scope.Actived = 'sign';
             });
 
             app.controller("signCtrl",function($scope,$http,data,$window){

@@ -132,7 +132,7 @@ public class AnswerDao{
 		public Answer mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Question question = questionDao.findOneQuestionByQueId(rs.getLong("ques_id"));
 			User user = userDao.findUserByUserID(rs.getLong("user_id"));
-			Upvote upvote = upvoteDao.queryIsUpvoteByAnsIdAndUserId(rs.getLong("ans_id"),currentUserId);
+			Upvote upvote = upvoteDao.queryUpvoteByAnsIdAndUserId(rs.getLong("ans_id"),currentUserId);
 			Answer answer = new Answer(
 								rs.getLong("ans_id"),
 								rs.getLong("user_id"),

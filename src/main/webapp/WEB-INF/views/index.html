@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
     <title>知乎</title>
 
@@ -21,22 +21,38 @@
                         <span class="glyphicon glyphicon-th-list"></span>
                         <span class="h4">最新动态</span>
                     </div>
-                    <div class="content" ng-repeat="answer in answers">
-                        <div class="content-title"><a href="/question/{{answer.question.quesID}}">{{answer.question.quesTitle}}</a></div>
-                        <div class="content-writer"><strong>{{answer.user.username}}</strong></div>
-                        <div class="content-main"><p>{{answer.ansContent}}</p></div>
+                    <div class="content" th:each="answer : ${answerList}">
+                        <div class="content-title"><a th:href="@{/question/${answer.question.quesID}}" th:text="${answer.question.quesTitle}">这是一个问题</a></div>
+                        <div class="content-writer"><strong th:text="${answer.user.username}">这是用户名</strong></div>
+                        <div class="content-main"><p th:text="${answer.ansContent}">这是内容</p></div>
                         <div class="up-and-down" >
-                            <div class="hover-block" ng-class="{'active': answer.upvote.up}" style="cursor:pointer" ng-click="up(answer);">
+                            <div class="hover-block" th:classappend="${answer.upvote.up}?'active':''"  style="cursor:pointer" th:attr="ng-click='up(\''+${answer.ansID}+'\');'">
                                 <div class="up" >
                                     <span class="glyphicon glyphicon-triangle-top"/>
                                 </div>
-                                <div class="h5 up-cont">{{answer.upvoteNumber}}</div>
+                                <div class="h5 up-cont" th:text="${answer.upvoteNumber}">1</div>
                             </div>
-                            <div class="down" ng-class="{'active': answer.upvote.down}" ng-click="down(answer);" style="cursor:pointer">
+                            <div class="down"  th:classappend="${answer.upvote.down}?'active':''" th:attr="ng-click='down(\''+${answer.ansID}+'\');'"  style="cursor:pointer">
                                 <span class="glyphicon glyphicon-triangle-bottom"  />
                             </div>
                         </div>
                     </div>
+                    <!--<div class="content" ng-repeat="answer in answers">-->
+                        <!--<div class="content-title"><a href="/question/{{answer.question.quesID}}">{{answer.question.quesTitle}}</a></div>-->
+                        <!--<div class="content-writer"><strong>{{answer.user.username}}</strong></div>-->
+                        <!--<div class="content-main"><p>{{answer.ansContent}}</p></div>-->
+                        <!--<div class="up-and-down" >-->
+                            <!--<div class="hover-block" ng-class="{'active': answer.upvote.up}" style="cursor:pointer" ng-click="up(answer);">-->
+                                <!--<div class="up" >-->
+                                    <!--<span class="glyphicon glyphicon-triangle-top"/>-->
+                                <!--</div>-->
+                                <!--<div class="h5 up-cont">{{answer.upvoteNumber}}</div>-->
+                            <!--</div>-->
+                            <!--<div class="down" ng-class="{'active': answer.upvote.down}" ng-click="down(answer);" style="cursor:pointer">-->
+                                <!--<span class="glyphicon glyphicon-triangle-bottom"  />-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
                 <div class="right-others col-md-4 ">
                   <img userID="working" src="/resources/images/static/working.png" alt=""/>
