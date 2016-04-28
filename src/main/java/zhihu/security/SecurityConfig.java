@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import zhihu.service.UserService;
 import zhihu.util.MD5Util;
 
@@ -42,17 +43,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 					.formLogin()
 					.loginPage("/login")
-					.failureUrl("/login#/signin?error=1")
-					.successHandler(new LoginSuccessHandler())
 					.usernameParameter("username").passwordParameter("password")
+					.failureUrl("/login#/signin?error=1")
+					.defaultSuccessUrl("/")
+					.successHandler(new LoginSuccessHandler())
 				.and()
 					.logout()
-					.logoutUrl("/logout")
-					.logoutSuccessUrl("/login#/signin?logout=1")
-				.and()
-					.exceptionHandling().accessDeniedPage("/Access_Denied")
-					.and()
-					.csrf().disable();
+					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+					.logoutSuccessUrl("/login#/signin?logout=1");
+//				.and()
+//					.exceptionHandling().accessDeniedPage("/Access_Denied");
 
 	}
 

@@ -30,7 +30,7 @@
     <script type="text/javascript" src="/resources/javascripts/spring-security-csrf-token-interceptor.min.js"></script>
     <script type="text/javascript" th:inline="javascript">
         //<![CDATA[
-        var app=angular.module("login");
+        var app=angular.module("login",[]);
                 //定义Service
             app.factory('data', function () {
 
@@ -46,7 +46,7 @@
             });
 
             app.controller("appCtrl",function($scope,$location){
-                //console.log($location.url());
+                console.log($location.url());
                 if($location.url()!=='/signup')
                     $scope.Actived = 'login';
                 else
@@ -62,7 +62,7 @@
                 $scope.passwordNotAg = true;
 
                 $scope.sign=function() {
-                    data.user.username=$scope.user;
+                    data.user.username=$scope.user.username;
                     data.user.password=$scope.user.password;
 
                     var user =$scope.user;

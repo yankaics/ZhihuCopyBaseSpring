@@ -1,21 +1,21 @@
-<form th:fragment="signPartial" class="form-horizontal" ng-submit="sign()" name="userForm" ng-controller="signCtrl"
-      xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:fragment="signPartial"  xmlns:th="http://www.w3.org/1999/xhtml">
+<form class="form-horizontal" ng-submit="sign()" name="userForm" ng-controller="signCtrl">
     <div class="form-group input-sign row">
         <label  class="control-label sr-only">Email</label>
         <div class="col-md-12">
-            <input type="nickname" class="form-control" ng-model="user.username" name="username" placeholder="NickName" required/>
+            <input type="nickname" class="form-control" ng-model="user.username" name="username" placeholder="NickName" required="required"/>
         </div>
     </div>
     <div class="form-group input-sign row">
         <label  class="control-label sr-only">Password</label>
         <div class="col-md-12">
-            <input type="password" class="form-control" name="password" ng-model="user.password" placeholder="Password(最少6位)" ng-minlength="6" ng-required="true" required/>
+            <input type="password" class="form-control" name="password" ng-model="user.password" placeholder="Password(最少6位)" data-ng-minlength="6" ng-required="true" required="required"/>
         </div>
     </div>
     <div class="form-group input-sign row">
         <label  class="control-label sr-only">Password</label>
         <div class="col-md-12">
-            <input type="password" class="form-control" name="passwordAgain"  ng-model="passwordAgain" ensure-same placeholder="Password Again(最少6位)" ng-minlength=6 required/>
+            <input type="password" class="form-control" name="passwordAgain"  ng-model="passwordAgain"  ensure-same="ensure-same" placeholder="Password Again(最少6位)" data-ng-minlength="6" required="required"/>
         </div>
     </div>
     <div class="form-group sub-sign row">
@@ -25,3 +25,4 @@
         </div>
     </div>
 </form>
+</div>

@@ -1,4 +1,5 @@
-<form th:fragment="loginPartial" class="form-horizontal" ng-controller="loginCtrl" action="/login" method="post" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="loginPartial" xmlns:th="http://www.thymeleaf.org">
+<form  class="form-horizontal" ng-controller="loginCtrl" th:action="@{/login}" method="post" >
     <div class="form-group input-login row" >
         <div ng-if="message.error" class="alert alert-danger row">
             <p>Invalid username and password.</p>
@@ -23,3 +24,4 @@
         </div>
     </div>
 </form>
+</div>
