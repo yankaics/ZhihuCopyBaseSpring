@@ -61,36 +61,36 @@
                 $scope.passwordAgain="";
                 $scope.passwordNotAg = true;
 
-                $scope.sign=function() {
-                    data.user.username=$scope.user.username;
-                    data.user.password=$scope.user.password;
-
-                    var user =$scope.user;
-                    console.log(user);
-
-                    var response = $http({
-                        url: "/login/signup",
-                        method: "POST",
-                        data: user,
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    });
-                    response.success(function (data) {
-                        console.log(data);
-                        if(data==='success'){
-                            $window.location.href='/index';
-                        }
-                        else
-                            alert(data);
-
-                    });
-                    response.error(function (data) {
-                        alert("error");
-                        alert(data);
-                        console.log(data);
-                    });
-                }
+//                $scope.sign=function() {
+//                    data.user.username=$scope.user.username;
+//                    data.user.password=$scope.user.password;
+//
+//                    var user =$scope.user;
+//                    console.log(user);
+//
+//                    var response = $http({
+//                        url: "/login/signup",
+//                        method: "POST",
+//                        data: user,
+//                        headers: {
+//                            "Content-Type": "application/json"
+//                        }
+//                    });
+//                    response.success(function (data) {
+//                        console.log(data);
+//                        if(data==='success'){
+//                            $window.location.href='/index';
+//                        }
+//                        else
+//                            alert(data);
+//
+//                    });
+//                    response.error(function (data) {
+//                        alert("error");
+//                        alert(data);
+//                        console.log(data);
+//                    });
+//                }
             });
 
             app.controller("loginCtrl",function($rootScope,$scope,$http,$window,$location){

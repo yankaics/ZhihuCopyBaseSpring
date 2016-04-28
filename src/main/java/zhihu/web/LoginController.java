@@ -7,10 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import zhihu.dao.UserDao;
 import zhihu.model.User;
 import zhihu.security.CustomUserDetail;
@@ -46,16 +43,18 @@ public class LoginController {
 	}
 
 
-	@RequestMapping(value = "/signup",method = RequestMethod.POST,consumes = {"application/json;charset=UTF-8"}, produces={"application/json;charset=UTF-8"})
-	public @ResponseBody String signUp(@RequestBody User user, HttpSession session){
-		if(!user.getUsername().isEmpty() && !user.getPassword().isEmpty()){
-			CustomUserDetail newUser = userService.signIn(user);
+	@RequestMapping(value = "/signup",method = RequestMethod.POST)
+	public String signUp(@RequestParam("username") String username,
+	                                   @RequestParam("password") String password,
+	                                   HttpSession session){
+		if(!username.isEmpty() && !password.isEmpty()){
+
+			CustomUserDetail newUser = userService.signIn(new User(username,password));
 			session.setAttribute("user",newUser);
-			return "success";
+			return "index";
 		}
-		else {
-			return "username or password is empty";
-		}
+		else 
+			return "error";
 	}
 
 	public void register(HttpServletRequest request,User newUser) {

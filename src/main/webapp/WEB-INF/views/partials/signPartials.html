@@ -1,5 +1,5 @@
-<div th:fragment="signPartial"  xmlns:th="http://www.w3.org/1999/xhtml">
-<form class="form-horizontal" ng-submit="sign()" name="userForm" ng-controller="signCtrl">
+<div th:fragment="signPartial"  xmlns:th="http://www.thymeleaf.org">
+<form class="form-horizontal" th:action="@{/login/signup}" name="userForm" ng-controller="signCtrl" method="post">
     <div class="form-group input-sign row">
         <label  class="control-label sr-only">Email</label>
         <div class="col-md-12">
