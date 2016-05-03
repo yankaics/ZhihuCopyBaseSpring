@@ -36,19 +36,23 @@
                 </div>
                 <div class="panel-footer">
                     <ul class="nav nav-pills">
-                        <li role="presentation"  ng-class="{active : activeMenu === 'Home'}"  ng-click="activeMenu = 'Home'">
-                            <a href="#/home" >Home</a>
+                        <li role="presentation" th:class="${active}=='home'?'active':''"  ng-click="activeMenu = 'Home'">
+                            <a href="/home" >Home</a>
                         </li>
-                        <li role="presentation"  ng-class="{active : activeMenu === 'Ans'}" ng-click="activeMenu = 'Ans'">
-                            <a href="#/ans" >回答</a>
+                        <li role="presentation" th:class="${active}=='answers'?'active':''" ng-click="activeMenu = 'Ans'">
+                            <a href="/home/answers" >回答</a>
                         </li>
-                        <li role="presentation" ng-class="{active : activeMenu === 'Que'}" ng-click="activeMenu = 'Que'">
-                            <a href="#/que">提问</a>
+                        <li role="presentation" th:class="${active}=='questions'?'active':''" ng-click="activeMenu = 'Que'">
+                            <a href="/home/questions">提问</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div ng-view="" ></div>
+            <div th:switch="${active}">
+                <div th:case="'home'" th:include="/partials/ansPartials:: ansPartial"></div>
+                <div th:case="'answers'" th:include="/partials/ansPartials:: ansPartial"></div>
+                <div th:case="'questions'" th:include="/partials/quePartials:: quePartial"></div>
+            </div>
         </div>
         <div class="right-others col-md-4 ">
             <img userID="working" src="/resources/images/static/working.png" alt=""/>
@@ -57,28 +61,7 @@
     </div>
 
     <script>
-        angular.module("home",['ngRoute'])
-            .config(['$routeProvider',
-            function ($routeProvider) {
-                $routeProvider.when('/', {
-                    templateUrl: '/resources/partials/ansPartials.html',
-                    controller:"ansCtrl",
-                    activeMenu: "Home"
-                }).when('/ans', {
-                    templateUrl: '/resources/partials/ansPartials.html',
-                    controller:"ansCtrl",
-                    activeMenu: "Ans"
-                }).when('/que', {
-                    templateUrl: '/resources/partials/quePartials.html',
-                    controller:"queCtrl",
-                    activeMenu: "Que"
-                }).otherwise({
-                    redirectTo:'/'
-                });
-            }]);
+        angular.module("home",['ngRoute']);
     </script>
-    <script type="text/javascript" src="/resources/controller/homeCtrl.js"></script>
-    <script type="text/javascript" src="/resources/controller/ansCtrl.js"></script>
-    <script type="text/javascript" src="/resources/controller/queCtrl.js"></script>
 </body>
 </html>

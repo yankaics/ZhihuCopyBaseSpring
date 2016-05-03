@@ -53,7 +53,7 @@ public class LoginController {
 			session.setAttribute("user",newUser);
 			return "index";
 		}
-		else 
+		else
 			return "error";
 	}
 

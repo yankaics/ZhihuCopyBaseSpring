@@ -1,0 +1,22 @@
+<div th:fragment="quePartial" xmlns:th="http://www.thymeleaf.org">
+    <div class="content panel panel-default">
+        <div class="panel-heading">我的提问</div>
+        <div class="panel-body">
+            <div class="que-content" th:each="question:${questionList}">
+                <div class="row que-row">
+                    <div class="que-view col-md-4 text-center">
+                        <h6 class="view-count"><strong th:text="${question.views}">{{que.views}}</strong></h6>
+                        <h6 class="view-name"><strong>浏览</strong></h6>
+                    </div>
+                    <div class="col-content col-md-8 ">
+                        <a th:href="@{'/question/'+${question.quesID}}">
+                            <span class="que-title">
+                                <strong th:text ="${question.quesTitle}">问题标题</strong>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

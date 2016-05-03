@@ -2,9 +2,8 @@ package zhihu.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import zhihu.dao.AnswerDao;
 import zhihu.dao.QuestionDao;
 import zhihu.model.Answer;
@@ -20,6 +19,7 @@ import java.util.List;
  * Created by ZJ on 2016/4/13.
  */
 @Controller
+@RequestMapping(value = "/home")
 public class HomeController {
 
 	@Autowired
@@ -28,27 +28,33 @@ public class HomeController {
 	@Autowired
 	QuestionDao questionDao;
 
-	@RequestMapping(value = "/home",method = RequestMethod.GET)
-	public String home(){
+	@RequestMapping(value = {"","/"})
+	public String home(HttpSession session,Model model){
+		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
+		List<Answer> answers = answerDao.findAnswersByUserID(user.getUserID());
+		model.addAttribute(answers);
+		model.addAttribute("active","home");
 		return "home";
 	}
 
 
-	@RequestMapping(value = "/answers",method = RequestMethod.GET)
-	@ResponseBody
-	public List<Answer> getAnswers(HttpSession session){
+	@RequestMapping(value = "/answers")
+	public String getAnswers(HttpSession session, Model model){
 		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
 		List<Answer> answers = answerDao.findAnswersByUserID(user.getUserID());
-		return answers;
+		model.addAttribute(answers);
+		model.addAttribute("active","answers");
+		return "home";
 	}
 
 
-	@RequestMapping(value = "/question",method = RequestMethod.GET)
-	@ResponseBody
-	public List<Question> getQustions(HttpSession session){
+	@RequestMapping(value = "/questions")
+	public String getQustions(HttpSession session,Model model){
 		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
 		List<Question> questions = questionDao.findQuestionsByUserID(user.getUserID());
-		return questions;
+		model.addAttribute(questions);
+		model.addAttribute("active","questions");
+		return "home";
 	}
 
 
