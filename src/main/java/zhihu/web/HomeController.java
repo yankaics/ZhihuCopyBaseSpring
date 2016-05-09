@@ -67,6 +67,7 @@ public class HomeController {
 		test.setUsername("test");
 		test.setPassword("123456");
 		userTestDao.addUser(test);
+		//test.setPassword("123");
 		return "test";
 	}
 

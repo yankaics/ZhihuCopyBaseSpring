@@ -1,6 +1,7 @@
 package zhihu.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by ZJ on 2016/4/13.
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)

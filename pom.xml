@@ -89,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
+            <artifactId>spring-orm</artifactId>
             <version>4.2.5.RELEASE</version>
         </dependency>
 

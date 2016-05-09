@@ -8,7 +8,9 @@
     <script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="//cdn.bootcss.com/angular.js/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="/resources/javascripts/bootstrap-wysiwyg.js"></script>
     <script type="text/javascript" src="/resources/javascripts/angular-route.min.js"></script>
+    <script type="text/javascript" src="/resources/javascripts/jquery.hotkeys.js"></script>
 </head>
 <body class="container" ng-app="question" >
     <div class="header" th:include="topnav:: topnav">
@@ -68,9 +70,28 @@
         <div class="right-others col-md-4 ">
                 <img userID="working" src="/resources/images/static/working.png" alt=""/>
                 <span userID="warning">抱歉，这边正在紧张的施工…</span>
+                <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
+                            <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
+                            <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="editor" contenteditable="true" style="overflow:scroll; min-height:300px;"> test</div>
         </div>
     </div>
      <script th:inline="javascript">
+
+         $('#editor').wysiwyg();
+
          //<![CDATA[
          var app=angular.module("question",[]);
 
@@ -79,8 +100,8 @@
              $scope.answerList={};
 
              $http({
-                         method: 'GET',
-                         url: $location.absUrl()+"/answers",
+                     method: 'GET',
+                     url: $location.absUrl()+"/answers",
                 }
              ).success(function (data) {
                  $scope.answerList=data;

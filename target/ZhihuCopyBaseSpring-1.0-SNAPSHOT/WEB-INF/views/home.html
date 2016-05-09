@@ -36,13 +36,13 @@
                 </div>
                 <div class="panel-footer">
                     <ul class="nav nav-pills">
-                        <li role="presentation" th:class="${active}=='home'?'active':''"  ng-click="activeMenu = 'Home'">
+                        <li role="presentation" th:class="${active}=='home'?'active':''" >
                             <a href="/home" >Home</a>
                         </li>
-                        <li role="presentation" th:class="${active}=='answers'?'active':''" ng-click="activeMenu = 'Ans'">
+                        <li role="presentation" th:class="${active}=='answers'?'active':''" >
                             <a href="/home/answers" >回答</a>
                         </li>
-                        <li role="presentation" th:class="${active}=='questions'?'active':''" ng-click="activeMenu = 'Que'">
+                        <li role="presentation" th:class="${active}=='questions'?'active':''">
                             <a href="/home/questions">提问</a>
                         </li>
                     </ul>
