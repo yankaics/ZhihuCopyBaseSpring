@@ -16,8 +16,8 @@ public interface AnswerDao extends JpaRepository<Answer,Long> {
 
 	Answer save(Answer answer);
 	Answer findByAnsID(long ansID);
-	List<Answer> findByUserID(long userID);
-	List<Answer> findByQuesID(long quesID);
+	List<Answer> findAllByUserID(long userID);
+	List<Answer> findAllByQuesID(long quesID);
 
 //	@Autowired
 //	private JdbcOperations jdbcOperations;
@@ -129,8 +129,8 @@ public interface AnswerDao extends JpaRepository<Answer,Long> {
 //		}
 //
 //		public Answer mapRow(ResultSet rs, int rowNum) throws SQLException {
-//			Question question = questionService.findByQuesID(rs.getLong("ques_id"));
-//			User user = userService.findByUserID(rs.getLong("user_id"));
+//			Question question = questionService.findAllByQuesID(rs.getLong("ques_id"));
+//			User user = userService.findAllByUserID(rs.getLong("user_id"));
 //			Upvote upvote = upvoteService.findByAnsIDAndUserID(rs.getLong("ans_id"),currentUserId);
 //			Answer answer = new Answer(
 //								rs.getLong("ans_id"),

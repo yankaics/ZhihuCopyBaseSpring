@@ -16,7 +16,7 @@ import java.util.List;
 public class ContentWrapperService {
 
 	@Autowired
-	private AnswerDao answerDao;
+	private AnswerService answerService;
 
 	@Autowired
 	private QuestionService questionService;
@@ -29,12 +29,12 @@ public class ContentWrapperService {
 
 
 	public ContentWrapper save(Answer answer, long currentUserId){
-		Answer newAnswer = answerDao.save(answer);
+		Answer newAnswer = answerService.save(answer);
 		return wrapAnswer(newAnswer,currentUserId);
 	}
 
 	public List<ContentWrapper> findByUserID(long userID, long currentUserId){
-		List<Answer> answers= answerDao.findByUserID(userID);
+		List<Answer> answers= answerService.findAllByUserID(userID);
 		List<ContentWrapper> contentWrappers = new ArrayList<>();
 		for (Answer answer :answers){
 			ContentWrapper contentWrapper = wrapAnswer(answer, currentUserId);
@@ -44,7 +44,7 @@ public class ContentWrapperService {
 	}
 
 	public List<ContentWrapper> findByQuesID(long quesID, long currentUserId){
-		List<Answer> answers= answerDao.findByQuesID(quesID);
+		List<Answer> answers= answerService.findAllByQuesID(quesID);
 		List<ContentWrapper> contentWrappers = new ArrayList<>();
 		for (Answer answer :answers){
 			ContentWrapper contentWrapper = wrapAnswer(answer, currentUserId);
@@ -56,14 +56,14 @@ public class ContentWrapperService {
 
 	public void updateUpNumber(long ansID, Upvote upvote){
 
-		Answer answer = answerDao.findByAnsID(ansID);
+		Answer answer = answerService.findByAnsID(ansID);
 
 		if(upvote.isUp())
 			answer.setUpvoteNumber(answer.getUpvoteNumber()+1);
 		else
 			answer.setUpvoteNumber(answer.getUpvoteNumber()-1);
 
-		answerDao.save(answer);
+		answerService.save(answer);
 	}
 
 	public ContentWrapper wrapAnswer(Answer answer, long currentUserId){
