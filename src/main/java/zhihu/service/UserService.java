@@ -28,7 +28,7 @@ public class UserService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		User user = userDao.findUserByUserName(username);
+		User user = userDao.findByUsername(username);
 		if (user != null) {
 
 			return new CustomUserDetail(
@@ -37,11 +37,12 @@ public class UserService implements UserDetailsService{
 					Collections.singleton(createAuthority()),
 					user.getUserID());
 		}
+
 		throw new UsernameNotFoundException("账户不存在");
 	}
 
 	public CustomUserDetail signIn(User user) {
-		User newUser = userDao.registerNewUser(user);
+		User newUser = userDao.save(user);
 
 		CustomUserDetail customUserDetail =
 				new CustomUserDetail(
@@ -52,6 +53,11 @@ public class UserService implements UserDetailsService{
 
 		return customUserDetail;
 	}
+
+	public User findByUserID(long userID){
+		return userDao.findByUserID(userID);
+	}
+
 
 	private Authentication authenticate(CustomUserDetail newUser) {
 		return new UsernamePasswordAuthenticationToken(newUser, null, Collections.singleton(createAuthority()));

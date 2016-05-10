@@ -7,11 +7,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import zhihu.dao.UserDao;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import zhihu.model.User;
 import zhihu.security.CustomUserDetail;
 import zhihu.service.UserService;
+import zhihu.util.MD5Util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,9 +24,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping(value = "/login")
 public class LoginController {
-
-	@Autowired
-	private UserDao userDao;
 
 	@Autowired
 	protected AuthenticationManager authenticationManager;
@@ -49,7 +48,7 @@ public class LoginController {
 	                                   HttpSession session){
 		if(!username.isEmpty() && !password.isEmpty()){
 
-			CustomUserDetail newUser = userService.signIn(new User(username,password));
+			CustomUserDetail newUser = userService.signIn(new User(username, new MD5Util().encode(password)));
 			session.setAttribute("user",newUser);
 			return "index";
 		}

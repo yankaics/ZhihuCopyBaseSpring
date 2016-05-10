@@ -21,18 +21,18 @@
                         <span class="glyphicon glyphicon-th-list"></span>
                         <span class="h4">最新动态</span>
                     </div>
-                    <div class="content" th:each="answer : ${answerList}">
-                        <div class="content-title"><a th:href="@{'/question/'+${answer.question.quesID}}" th:text="${answer.question.quesTitle}">这是一个问题</a></div>
-                        <div class="content-writer"><strong th:text="${answer.user.username}">这是用户名</strong></div>
-                        <div class="content-main"><p th:text="${answer.ansContent}">这是内容</p></div>
+                    <div class="content" th:each="contentWrapper : ${contentWrapperList}">
+                        <div class="content-title"><a th:href="@{'/question/'+${contentWrapper.question.quesID}}" th:text="${contentWrapper.question.quesTitle}">这是一个问题</a></div>
+                        <div class="content-writer"><strong th:text="${contentWrapper.user.username}">这是用户名</strong></div>
+                        <div class="content-main"><p th:text="${contentWrapper.answer.ansContent}">这是内容</p></div>
                         <div class="up-and-down" >
-                            <div class="hover-block" th:classappend="${answer.upvote.up}?'active':''"  style="cursor:pointer" th:attr="ng-click='up(\''+${answer.ansID}+'\');'">
+                            <div class="hover-block" th:classappend="${contentWrapper.upvote.up}?'active':''"  style="cursor:pointer" th:attr="ng-click='up(\''+${contentWrapper.answer.ansID}+'\');'">
                                 <div class="up" >
                                     <span class="glyphicon glyphicon-triangle-top"/>
                                 </div>
-                                <div class="h5 up-cont" th:text="${answer.upvoteNumber}">1</div>
+                                <div class="h5 up-cont" th:text="${contentWrapper.answer.upvoteNumber}">1</div>
                             </div>
-                            <div class="down"  th:classappend="${answer.upvote.down}?'active':''" th:attr="ng-click='down(\''+${answer.ansID}+'\');'"  style="cursor:pointer">
+                            <div class="down"  th:classappend="${contentWrapper.upvote.down}?'active':''" th:attr="ng-click='down(\''+${contentWrapper.answer.ansID}+'\');'"  style="cursor:pointer">
                                 <span class="glyphicon glyphicon-triangle-bottom"  />
                             </div>
                         </div>

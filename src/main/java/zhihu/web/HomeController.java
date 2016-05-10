@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import zhihu.dao.AnswerDao;
-import zhihu.dao.QuestionDao;
-import zhihu.model.Answer;
+import zhihu.model.ContentWrapper;
 import zhihu.model.Question;
-import zhihu.model.User;
 import zhihu.security.CustomUserDetail;
-import zhihu.service.UserTestService;
+import zhihu.service.ContentWrapperService;
+import zhihu.service.QuestionService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -23,16 +21,16 @@ import java.util.List;
 public class HomeController {
 
 	@Autowired
-	AnswerDao answerDao;
+	ContentWrapperService contentWrapperService;
 
 	@Autowired
-	QuestionDao questionDao;
+	QuestionService questionService;
 
 	@RequestMapping(value = {"","/"})
 	public String home(HttpSession session,Model model){
 		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
-		List<Answer> answers = answerDao.findAnswersByUserID(user.getUserID());
-		model.addAttribute(answers);
+		List<ContentWrapper> contents = contentWrapperService.findByUserID(user.getUserID(),user.getUserID());
+		model.addAttribute(contents);
 		model.addAttribute("active","home");
 		return "home";
 	}
@@ -41,8 +39,8 @@ public class HomeController {
 	@RequestMapping(value = "/answers")
 	public String getAnswers(HttpSession session, Model model){
 		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
-		List<Answer> answers = answerDao.findAnswersByUserID(user.getUserID());
-		model.addAttribute(answers);
+		List<ContentWrapper> contents = contentWrapperService.findByUserID(user.getUserID(),user.getUserID());
+		model.addAttribute(contents);
 		model.addAttribute("active","answers");
 		return "home";
 	}
@@ -51,24 +49,10 @@ public class HomeController {
 	@RequestMapping(value = "/questions")
 	public String getQustions(HttpSession session,Model model){
 		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
-		List<Question> questions = questionDao.findQuestionsByUserID(user.getUserID());
+		List<Question> questions = questionService.findByUserID(user.getUserID());
 		model.addAttribute(questions);
 		model.addAttribute("active","questions");
 		return "home";
-	}
-
-
-	@Autowired
-	UserTestService userTestDao;
-
-	@RequestMapping(value = "/test")
-	public String test(){
-		User test = new User();
-		test.setUsername("test");
-		test.setPassword("123456");
-		userTestDao.addUser(test);
-		//test.setPassword("123");
-		return "test";
 	}
 
 }

@@ -2,11 +2,13 @@ package zhihu.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import zhihu.dao.AnswerDao;
-import zhihu.dao.UpvoteDao;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import zhihu.model.Upvote;
 import zhihu.security.CustomUserDetail;
+import zhihu.service.ContentWrapperService;
+import zhihu.service.UpvoteService;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,10 +21,10 @@ public class AnswerController {
 
 
 	@Autowired
-	private AnswerDao answerDao;
+	private ContentWrapperService contentWrapperService;
 
 	@Autowired
-	private UpvoteDao upvoteDao;
+	private UpvoteService upvoteService;
 
 
 	@RequestMapping(value = "/up")
@@ -30,15 +32,15 @@ public class AnswerController {
 	public String up(@RequestParam("ans_id") long ans_id, HttpSession session){
 		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
 
-		Upvote upvote = upvoteDao.queryUpvoteByAnsIdAndUserId(ans_id,user.getUserID());
+		Upvote upvote = upvoteService.findByAnsIDAndUserID(ans_id,user.getUserID());
 
 		upvote.setUp(!upvote.isUp());
 		if(upvote.isUp() && upvote.isDown()){
 			upvote.setDown(!upvote.isDown());
 		}
 
-		answerDao.updateUpNumber(upvote.getAnsID(),upvote);
-		upvoteDao.updateRecordForUpvote(upvote);
+		contentWrapperService.updateUpNumber(upvote.getAnsID(),upvote);
+		upvoteService.updateUpvote(upvote);
 		return "success";
 	}
 
@@ -47,15 +49,15 @@ public class AnswerController {
 	public String down(@RequestParam("ans_id") long ans_id, HttpSession session){
 		CustomUserDetail user = (CustomUserDetail) session.getAttribute("user");
 
-		Upvote upvote = upvoteDao.queryUpvoteByAnsIdAndUserId(ans_id,user.getUserID());
+		Upvote upvote = upvoteService.findByAnsIDAndUserID(ans_id,user.getUserID());
 
 		upvote.setDown(!upvote.isDown());
 		if(upvote.isUp() && upvote.isDown()){
 			upvote.setUp(!upvote.isUp());
-			answerDao.updateUpNumber(upvote.getAnsID(),upvote);
+			contentWrapperService.updateUpNumber(upvote.getAnsID(),upvote);
 		}
 
-		upvoteDao.updateRecordForUpvote(upvote);
+		upvoteService.updateUpvote(upvote);
 		return "success";
 	}
 

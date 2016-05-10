@@ -1,19 +1,32 @@
 package zhihu.model;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
  * Created by ZJ on 2016/4/13.
  */
+@Entity
+@Table(name = "answer")
 public class Answer {
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name="ans_id")
 	private long ansID;
+
+	@Column(name="user_id")
 	private long userID;
+
+	@Column(name="ques_id")
 	private long quesID;
+
+	@Column(name="ans_content")
 	private String ansContent;
+
+	@Column(name="upvote_number")
 	private int upvoteNumber;
-	private Question question;
-	private User user;
-	private Upvote upvote;
+
+	@Column(name="create_at")
 	private Timestamp createAt;
 
 	public Answer(){
@@ -34,8 +47,6 @@ public class Answer {
 		this.quesID = quesID;
 		this.ansContent = ansContent;
 		this.upvoteNumber = upvoteNumber;
-		this.question = question;
-		this.user = user;
 		this.createAt = createAt;
 	}
 
@@ -78,31 +89,6 @@ public class Answer {
 
 	public void setUpvoteNumber(int upvoteNumber) {
 		this.upvoteNumber = upvoteNumber;
-	}
-
-	public Question getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(Question question) {
-		this.question = question;
-	}
-
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public Upvote getUpvote() {
-		return upvote;
-	}
-
-	public void setUpvote(Upvote upvote) {
-		this.upvote = upvote;
 	}
 
 	public Timestamp getCreateAt() {

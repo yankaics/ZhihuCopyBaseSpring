@@ -32,22 +32,22 @@
                 </div>
             </div>
             <div class="ans-top">
-                <h5><strong>{{answerList.length}}个回答</strong></h5>
+                <h5><strong>{{contentList.length}}个回答</strong></h5>
             </div>
-            <div class="ans-main" ng-repeat="ans in answerList" >
+            <div class="ans-main" ng-repeat="contentWrapper in contentList" >
                 <div class="ans-main-top">
-                    <span class="h3"><strong>{{ans.user.username}}</strong></span>
+                    <span class="h3"><strong>{{contentWrapper.user.username}}</strong></span>
                     <img  class="small_avatar pull-right" src="/resources/images/static/liukanshan.png"/>
                 </div>
                 <div class="ans-main-content">
-                    <p>{{ans.ansContent}}</p>
+                    <p>{{contentWrapper.answer.ansContent}}</p>
                 </div>
                 <div class="up-and-down" >
-                    <div class="hover-block" ng-class="{'active': ans.upvote.up}" style="cursor:pointer" ng-click="up(ans);">
+                    <div class="hover-block" ng-class="{'active': ans.upvote.up}" style="cursor:pointer"  ng-click="up(ans);">
                         <div class="up" >
                             <span class="glyphicon glyphicon-triangle-top"/>
                         </div>
-                        <div class="h5 up-cont">{{ans.upvoteNumber}}</div>
+                        <div class="h5 up-cont">{{contentWrapper.answer.upvoteNumber}}</div>
                     </div>
                     <div class="down" ng-class="{'active': ans.upvote.down}" ng-click="down(ans);" style="cursor:pointer">
                         <span class="glyphicon glyphicon-triangle-bottom"  />
@@ -70,41 +70,25 @@
         <div class="right-others col-md-4 ">
                 <img userID="working" src="/resources/images/static/working.png" alt=""/>
                 <span userID="warning">抱歉，这边正在紧张的施工…</span>
-                <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
-                    <div class="btn-group">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="icon-font"></i><b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                        </ul>
-                    </div>
-                    <div class="btn-group">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
-                            <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
-                            <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div id="editor" contenteditable="true" style="overflow:scroll; min-height:300px;"> test</div>
         </div>
     </div>
      <script th:inline="javascript">
 
-         $('#editor').wysiwyg();
+         //$('#editor').wysiwyg();
 
          //<![CDATA[
          var app=angular.module("question",[]);
 
          app.controller("ansQuesCtrl",function($scope,$http,$location){
 
-             $scope.answerList={};
+             $scope.contentList={};
 
              $http({
                      method: 'GET',
                      url: $location.absUrl()+"/answers",
                 }
              ).success(function (data) {
-                 $scope.answerList=data;
+                 $scope.contentList=data;
                  console.log(data);
              }).error(function (data) {
                  alert("error");
@@ -123,7 +107,7 @@
                         data: answer
                     }
                  ).success(function (data) {
-                    $scope.answerList.push(data);
+                    $scope.contentList.push(data);
                     $scope.ansContent="";
                     console.log(data);
                  }).error(function (data) {

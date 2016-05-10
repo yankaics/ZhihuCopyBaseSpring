@@ -1,23 +1,47 @@
 package zhihu.model;
 
+import javax.persistence.*;
+
 /**
  * Created by ZJ on 2016/4/17.
  */
+@Entity
+@Table(name = "upvote")
 public class Upvote {
+
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name="upvote_id")
 	private long upvoteID;
+
+	@Column(name="user_id")
 	private long userID;
+
+	@Column(name="ans_id")
 	private long ansID;
+
+	@Column(name="up")
 	private boolean up;
+
+	@Column(name="down")
 	private boolean down;
+
 	public Upvote(){
 
 	}
+
 	public Upvote(long upvoteID, long userID, long ansID,boolean up,boolean down) {
 		this.upvoteID = upvoteID;
 		this.userID = userID;
 		this.ansID = ansID;
 		this.up = up;
 		this.down = down;
+	}
+
+	public Upvote(long userID, long ansID) {
+
+		this.userID = userID;
+		this.ansID = ansID;
 	}
 
 	public long getUpvoteID() {
